@@ -14,8 +14,8 @@ minutes the script picks up approved rows with an empty `Status`, sends them, an
 writes `SENT` plus a timestamp back to the row. Anything malformed gets `ERROR`
 and a reason in `Notes` instead of being sent.
 
-The trigger runs under **your** Google account, so mail leaves from your address.
-She never touches Gmail.
+The trigger runs under **your** Google account, so mail leaves under your identity
+— configured to send as `hi@radmalhan.com`. She never touches Gmail.
 
 ## Setup
 
@@ -33,10 +33,12 @@ the step that makes the approval gate real; without it she can approve her own r
 > rewritten code then runs under whichever account owns the trigger — yours. A
 > standalone project keeps the code out of her reach.
 
-**4. Authorize.** Run `previewApprovedEmails` once. Google will prompt for
+**4. Authorize and confirm the sending address.** Run `checkAliases` once. Google will prompt for
 permissions; the "unverified app" warning is expected for your own script
-(*Advanced* → *Go to project*). Preview sends nothing — it just logs what would go
-out. Check the log looks right.
+(*Advanced* → *Go to project*). The log tells you which account the script runs as
+and which addresses it may legitimately send from. If `hi@radmalhan.com` isn't
+listed, fix that first — see below. Then run `previewApprovedEmails`, which sends
+nothing and just logs what would go out.
 
 **5. Start the timer.** Run `installTrigger` once.
 
@@ -59,8 +61,37 @@ At the top of `Code.gs`:
 | `SHEET_ID` | Which sheet to read. Already set. |
 | `MAX_PER_RUN` | Cap per run (25). |
 | `SENDER_NAME` | Display name on outgoing mail. |
-| `REPLY_TO` | Set to route replies elsewhere. Empty = your address. |
+| `SEND_AS` | Address mail is sent from. Empty = the script owner's own address. |
+| `REPLY_TO` | Set to route replies elsewhere. Empty = the `SEND_AS` address. |
 | `TAB_NAME` | Empty = first tab. |
+
+## Sending from hi@radmalhan.com
+
+`SEND_AS` is set to `hi@radmalhan.com`. Gmail honours a `from` address **only** if
+it's a verified send-as alias on the account running the script. Hand it anything
+else and Gmail doesn't error — it quietly sends from the account's primary address
+instead. So `resolveSendAs_` checks the alias list up front and refuses to run at
+all if it doesn't match, rather than letting a whole queue go out under the wrong
+name.
+
+Run `checkAliases` to see where you stand. If `hi@radmalhan.com` isn't in the
+verified list, pick whichever of these fits how that address is set up:
+
+**If `hi@radmalhan.com` is its own Google account** (a Workspace login), that's the
+cleanest fix: build the Apps Script project while signed in as `hi@`, and share the
+sheet with it as an **Editor**. It then sends from `hi@` natively, no alias needed —
+the script detects this and skips the override.
+
+**If it's a mailbox or forwarder at your domain host**, add it as an alias on the
+Gmail account: *Gmail → Settings → Accounts and Import → "Send mail as" → Add
+another email address*. Untick "Treat as an alias" if you want replies to land in
+the `hi@` mailbox rather than your gmail inbox. Google mails a confirmation code to
+`hi@radmalhan.com` — enter it, and the address becomes usable.
+
+One cosmetic caveat: if the alias sends through Gmail's servers rather than your
+domain's own SMTP, recipients see `hi@radmalhan.com via gmail.com` in some clients.
+Entering your host's SMTP details during alias setup avoids that, and is better for
+deliverability on a domain you own.
 
 ## Known limits
 

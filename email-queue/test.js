@@ -24,10 +24,16 @@ function run(dataRows, opts = {}) {
   const logs  = [];
   const ctx = {
     SpreadsheetApp: { openById: () => ({ getSheets: () => [sheet], getSheetByName: () => sheet }), flush: () => {} },
-    GmailApp: { sendEmail: (to, subject, body, options) => {
-      if (opts.throwOn && opts.throwOn(to)) throw new Error('SMTP boom');
-      sends.push({ to, subject, body, options });
-    }},
+    GmailApp: {
+      sendEmail: (to, subject, body, options) => {
+        if (opts.throwOn && opts.throwOn(to)) throw new Error('SMTP boom');
+        sends.push({ to, subject, body, options });
+      },
+      getAliases: () => (opts.aliases === undefined ? ['hi@radmalhan.com'] : opts.aliases),
+    },
+    Session: { getActiveUser: () => ({
+      getEmail: () => (opts.activeUser === undefined ? 'radhika.malhan@gmail.com' : opts.activeUser),
+    })},
     MailApp: { getRemainingDailyQuota: () => (opts.quota === undefined ? 100 : opts.quota) },
     LockService: { getScriptLock: () => ({ tryLock: () => true, releaseLock: () => {} }) },
     Logger: { log: (...a) => logs.push(a.join(' ')) },
@@ -35,8 +41,10 @@ function run(dataRows, opts = {}) {
     Date,
   };
   vm.createContext(ctx);
-  vm.runInContext(SRC + '\nsendApprovedEmails();', ctx);
-  return { sheet, sends, logs };
+  let error = null;
+  try { vm.runInContext(SRC + '\nsendApprovedEmails();', ctx); }
+  catch (e) { error = e; }
+  return { sheet, sends, logs, error };
 }
 
 let pass = 0, fail = 0;
@@ -130,6 +138,42 @@ console.log('\n--- send failure is recorded, not retried blindly ---');
   ok('error message captured', /boom/i.test(String(sheet.grid[1][N-1])), String(sheet.grid[1][N-1]));
   // both rows now carry a status (ERROR / SENT), so a re-run must send nothing
   ok('neither row resent next run', run(sheet.grid.slice(1)).sends.length === 0);
+}
+
+console.log('\n--- sender identity ---');
+{
+  const row = () => [[1,'jane@example.com','','S','B','YES','','','']];
+
+  const verified = run(row());
+  ok('verified alias -> from is set',
+     verified.sends[0] && verified.sends[0].options.from === 'hi@radmalhan.com',
+     JSON.stringify(verified.sends[0] && verified.sends[0].options));
+  ok('verified alias -> no error', verified.error === null);
+
+  // The critical case: Gmail would silently fall back to the primary address.
+  const unverified = run(row(), { aliases: ['other@example.com'] });
+  ok('unverified alias -> throws', unverified.error !== null);
+  ok('unverified alias -> sends NOTHING', unverified.sends.length === 0,
+     'got ' + unverified.sends.length);
+  ok('unverified alias -> row left untouched', unverified.sheet.grid[1][ST-1] === '',
+     String(unverified.sheet.grid[1][ST-1]));
+  ok('error names the offending address',
+     /hi@radmalhan\.com/.test(String(unverified.error)), String(unverified.error));
+  ok('error names what it would have sent from',
+     /radhika\.malhan@gmail\.com/.test(String(unverified.error)));
+
+  const noAliases = run(row(), { aliases: [] });
+  ok('no aliases at all -> throws, sends nothing',
+     noAliases.error !== null && noAliases.sends.length === 0);
+
+  // Script running under hi@ itself: no override needed, and none should be set.
+  const native = run(row(), { aliases: [], activeUser: 'hi@radmalhan.com' });
+  ok('script owned by hi@ -> sends without error', native.error === null && native.sends.length === 1,
+     String(native.error));
+  ok('script owned by hi@ -> no from override', native.sends[0] && !native.sends[0].options.from);
+
+  const caseInsensitive = run(row(), { aliases: ['HI@RadMalhan.com'] });
+  ok('alias match is case-insensitive', caseInsensitive.error === null && caseInsensitive.sends.length === 1);
 }
 
 console.log('\n--- quota exhaustion stops the run ---');

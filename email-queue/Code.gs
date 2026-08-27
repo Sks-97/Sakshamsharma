@@ -13,7 +13,8 @@ var SHEET_ID   = '19zQjjArR1uMeCAbMur3-2xt5zak6lDK7bSdBTfXPgew';
 var TAB_NAME   = '';   // '' = first tab
 var MAX_PER_RUN = 25;  // leaves headroom under the daily Gmail quota
 var SENDER_NAME = 'Radhika Malhan';
-var REPLY_TO    = '';  // '' = your account address
+var SEND_AS     = 'hi@radmalhan.com';  // '' = whichever account owns the script
+var REPLY_TO    = '';  // '' = the SEND_AS address
 
 var FIRST_DATA_ROW = 2;
 var COL = { ID: 1, TO: 2, CC: 3, SUBJECT: 4, BODY: 5, APPROVED: 6, STATUS: 7, SENT_AT: 8, NOTES: 9 };
@@ -29,6 +30,9 @@ function sendApprovedEmails() {
   }
 
   try {
+    // Resolve this first: a bad SEND_AS must abort the run before anything is
+    // sent, not after half the queue has gone out from the wrong address.
+    var sendAs = resolveSendAs_();
     var sheet = getSheet_();
     var last = sheet.getLastRow();
     if (last < FIRST_DATA_ROW) { Logger.log('No data rows.'); return; }
@@ -47,7 +51,7 @@ function sendApprovedEmails() {
       if (!isApproved_(row[COL.APPROVED - 1])) { skipped++; continue; }
       if (String(row[COL.STATUS - 1]).trim() !== '') { skipped++; continue; }  // already SENT / SENDING / ERROR
 
-      var mail = buildMessage_(row);
+      var mail = buildMessage_(row, sendAs);
       if (mail.error) {
         writeResult_(sheet, rowNum, 'ERROR', mail.error);
         failed++;
@@ -76,6 +80,8 @@ function sendApprovedEmails() {
 
 /** Dry run: logs exactly what sendApprovedEmails would do, sending nothing. */
 function previewApprovedEmails() {
+  var sendAs = resolveSendAs_();
+  Logger.log('Sending as: %s', sendAs || Session.getActiveUser().getEmail() || '(the script owner)');
   var sheet = getSheet_();
   var last = sheet.getLastRow();
   if (last < FIRST_DATA_ROW) { Logger.log('No data rows.'); return; }
@@ -88,7 +94,7 @@ function previewApprovedEmails() {
     if (!isApproved_(row[COL.APPROVED - 1])) continue;
     if (String(row[COL.STATUS - 1]).trim() !== '') continue;
 
-    var mail = buildMessage_(row);
+    var mail = buildMessage_(row, sendAs);
     pending++;
     if (mail.error) {
       Logger.log('row %s  WOULD FAIL — %s', FIRST_DATA_ROW + i, mail.error);
@@ -102,6 +108,42 @@ function previewApprovedEmails() {
 
 // ---------------------------------------------------------------- helpers
 
+/**
+ * Returns the address to put in `from`, or '' to use the account's own address.
+ *
+ * Gmail accepts a `from` only for a VERIFIED send-as alias on the authorizing
+ * account. Hand it anything else and it does not error — it quietly sends from
+ * the primary address instead. So we refuse to run rather than let a whole queue
+ * go out under the wrong identity.
+ */
+function resolveSendAs_() {
+  if (!SEND_AS) return '';
+  var target  = SEND_AS.trim().toLowerCase();
+  var aliases = GmailApp.getAliases();
+
+  for (var i = 0; i < aliases.length; i++) {
+    if (String(aliases[i]).trim().toLowerCase() === target) return aliases[i];
+  }
+
+  var me = String(Session.getActiveUser().getEmail() || '').trim().toLowerCase();
+  if (me && me === target) return '';  // it IS this account's address; no override needed
+
+  throw new Error(
+    'SEND_AS is "' + SEND_AS + '", which is not a verified send-as alias on ' +
+    (me || 'this account') + '. Gmail would silently send from ' + (me || 'the script owner') +
+    ' instead, so nothing was sent. Verified aliases: ' +
+    (aliases.length ? aliases.join(', ') : '(none)') +
+    '. Run checkAliases(), then see README > "Sending from hi@radmalhan.com".');
+}
+
+/** Run this to see which account the script runs as and what it may send from. */
+function checkAliases() {
+  var aliases = GmailApp.getAliases();
+  Logger.log('Script runs as:  %s', Session.getActiveUser().getEmail() || '(unavailable)');
+  Logger.log('Verified aliases: %s', aliases.length ? aliases.join(', ') : '(none)');
+  Logger.log('SEND_AS is set to: %s', SEND_AS || '(the account above)');
+}
+
 function getSheet_() {
   var ss = SpreadsheetApp.openById(SHEET_ID);
   var sheet = TAB_NAME ? ss.getSheetByName(TAB_NAME) : ss.getSheets()[0];
@@ -110,7 +152,7 @@ function getSheet_() {
 }
 
 /** Validates one row and assembles the Gmail payload. Returns {error} on bad input. */
-function buildMessage_(row) {
+function buildMessage_(row, sendAs) {
   var to      = String(row[COL.TO - 1]).trim();
   var subject = String(row[COL.SUBJECT - 1]).trim();
   var body    = String(row[COL.BODY - 1]);
@@ -125,6 +167,7 @@ function buildMessage_(row) {
   }
 
   var options = { name: SENDER_NAME };
+  if (sendAs)  options.from = sendAs;
   if (REPLY_TO) options.replyTo = REPLY_TO;
 
   var ccRaw = String(row[COL.CC - 1]).trim();
