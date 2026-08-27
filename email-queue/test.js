@@ -31,9 +31,12 @@ function run(dataRows, opts = {}) {
       },
       getAliases: () => (opts.aliases === undefined ? ['hi@radmalhan.com'] : opts.aliases),
     },
-    Session: { getActiveUser: () => ({
-      getEmail: () => (opts.activeUser === undefined ? 'radhika.malhan@gmail.com' : opts.activeUser),
-    })},
+    Session: {
+      getActiveUser:    () => ({ getEmail: () => (opts.activeUser === undefined ? 'radhika.malhan@gmail.com' : opts.activeUser) }),
+      getEffectiveUser: () => ({ getEmail: () => (opts.effectiveUser === undefined
+                                   ? (opts.activeUser === undefined ? 'radhika.malhan@gmail.com' : opts.activeUser)
+                                   : opts.effectiveUser) }),
+    },
     MailApp: { getRemainingDailyQuota: () => (opts.quota === undefined ? 100 : opts.quota) },
     LockService: { getScriptLock: () => ({ tryLock: () => true, releaseLock: () => {} }) },
     Logger: { log: (...a) => logs.push(a.join(' ')) },
@@ -171,6 +174,15 @@ console.log('\n--- sender identity ---');
   ok('script owned by hi@ -> sends without error', native.error === null && native.sends.length === 1,
      String(native.error));
   ok('script owned by hi@ -> no from override', native.sends[0] && !native.sends[0].options.from);
+
+  // getActiveUser can come back empty on a trigger; getEffectiveUser must carry it.
+  const blankActive = run(row(), { aliases: [], activeUser: '', effectiveUser: 'hi@radmalhan.com' });
+  ok('blank activeUser falls back to effectiveUser',
+     blankActive.error === null && blankActive.sends.length === 1, String(blankActive.error));
+
+  const noIdentity = run(row(), { aliases: [], activeUser: '', effectiveUser: '' });
+  ok('no resolvable identity -> refuses to send',
+     noIdentity.error !== null && noIdentity.sends.length === 0);
 
   const caseInsensitive = run(row(), { aliases: ['HI@RadMalhan.com'] });
   ok('alias match is case-insensitive', caseInsensitive.error === null && caseInsensitive.sends.length === 1);

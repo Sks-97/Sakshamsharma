@@ -25,8 +25,11 @@ The trigger runs under **your** Google account, so mail leaves under your identi
 Notes) → right-click → *Protect range* → *Set permissions* → *Only you*. This is
 the step that makes the approval gate real; without it she can approve her own rows.
 
-**3. Create the script.** Go to [script.google.com](https://script.google.com) →
-*New project* → paste in `Code.gs` → save.
+**3. Create the script — signed in as `hi@radmalhan.com`.** Go to
+[script.google.com](https://script.google.com) → *New project* → paste in `Code.gs`
+→ save. The account you build it under is the account mail sends from, so this step
+is the whole ballgame. The sheet is already shared with `hi@` as an Editor, which is
+what lets the script write `SENT` back.
 
 > Create it there, **not** from inside the sheet via Extensions → Apps Script.
 > Anyone with edit access to a sheet can rewrite its bound script, and that
@@ -42,7 +45,7 @@ nothing and just logs what would go out.
 
 **5. Start the timer.** Run `installTrigger` once.
 
-**6. Share the sheet** with her as an **Editor**.
+**6. Share the sheet** with her as an **Editor**. (Already done.)
 
 ## Day to day
 

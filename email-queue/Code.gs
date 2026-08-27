@@ -81,7 +81,7 @@ function sendApprovedEmails() {
 /** Dry run: logs exactly what sendApprovedEmails would do, sending nothing. */
 function previewApprovedEmails() {
   var sendAs = resolveSendAs_();
-  Logger.log('Sending as: %s', sendAs || Session.getActiveUser().getEmail() || '(the script owner)');
+  Logger.log('Sending as: %s', sendAs || currentUser_() || '(the script owner)');
   var sheet = getSheet_();
   var last = sheet.getLastRow();
   if (last < FIRST_DATA_ROW) { Logger.log('No data rows.'); return; }
@@ -125,7 +125,7 @@ function resolveSendAs_() {
     if (String(aliases[i]).trim().toLowerCase() === target) return aliases[i];
   }
 
-  var me = String(Session.getActiveUser().getEmail() || '').trim().toLowerCase();
+  var me = currentUser_().toLowerCase();
   if (me && me === target) return '';  // it IS this account's address; no override needed
 
   throw new Error(
@@ -136,12 +136,30 @@ function resolveSendAs_() {
     '. Run checkAliases(), then see README > "Sending from hi@radmalhan.com".');
 }
 
+/**
+ * The account whose Gmail actually sends. Prefer getEffectiveUser: on a time-driven
+ * trigger that is reliably the script owner, whereas getActiveUser can come back
+ * empty depending on the invocation context.
+ */
+function currentUser_() {
+  try {
+    var effective = Session.getEffectiveUser();
+    if (effective && effective.getEmail()) return String(effective.getEmail()).trim();
+  } catch (e) { /* fall through */ }
+  try {
+    var active = Session.getActiveUser();
+    if (active && active.getEmail()) return String(active.getEmail()).trim();
+  } catch (e) { /* fall through */ }
+  return '';
+}
+
 /** Run this to see which account the script runs as and what it may send from. */
 function checkAliases() {
   var aliases = GmailApp.getAliases();
-  Logger.log('Script runs as:  %s', Session.getActiveUser().getEmail() || '(unavailable)');
+  Logger.log('Script runs as:   %s', currentUser_() || '(unavailable)');
   Logger.log('Verified aliases: %s', aliases.length ? aliases.join(', ') : '(none)');
   Logger.log('SEND_AS is set to: %s', SEND_AS || '(the account above)');
+  Logger.log('Will send from:   %s', resolveSendAs_() || currentUser_() || '(script owner)');
 }
 
 function getSheet_() {
