@@ -1,0 +1,505 @@
+<title>The Usual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,600;9..144,0,700;9..144,1,400;9..144,1,600&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E9EEE6; --surface:#F5F8F2; --surface-2:#DEE6D9; --sunk:#E1E8DC;
+  --ink:#141C17; --ink-2:#3B4940; --muted:#66756B; --rule:#C6D1C0;
+  --accent:#A81F55; --accent-soft:#F3DCE5; --brass:#856A20;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Karla",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#121711; --surface:#1A211A; --surface-2:#242C23; --sunk:#0D120C;
+  --ink:#E7ECE3; --ink-2:#C3CDBE; --muted:#8D9B88; --rule:#2F382D;
+  --accent:#F2739F; --accent-soft:#3B1C28; --brass:#D3B25D;}}
+:root[data-theme="dark"]{
+  --ground:#121711; --surface:#1A211A; --surface-2:#242C23; --sunk:#0D120C;
+  --ink:#E7ECE3; --ink-2:#C3CDBE; --muted:#8D9B88; --rule:#2F382D;
+  --accent:#F2739F; --accent-soft:#3B1C28; --brass:#D3B25D;}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:17px;
+  line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:22px;padding-block:0 90px}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.16;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);font-weight:500}
+header.mast{border-bottom:1px solid var(--rule);padding-block:54px 38px;display:flex;
+  flex-direction:column;gap:20px}
+.mast h1{font-size:clamp(2.5rem,7.4vw,4.4rem);letter-spacing:-.02em;font-weight:700}
+.mast h1 em{font-style:italic;color:var(--accent)}
+.logline{font-family:var(--display);font-size:clamp(1.06rem,2.4vw,1.32rem);font-style:italic;
+  color:var(--ink-2);max-width:46ch;line-height:1.36}
+.meta{display:flex;flex-wrap:wrap;gap:9px 26px;font-family:var(--mono);font-size:.73rem;
+  letter-spacing:.05em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:500}
+section{padding-block:48px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:none}
+.sechead{display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
+.sechead h2{font-size:clamp(1.6rem,4.2vw,2.25rem);letter-spacing:-.01em}
+.lede{font-size:1.03rem;color:var(--ink-2);max-width:66ch}
+.note{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  padding:22px 26px;display:flex;flex-direction:column;gap:13px}
+.note p{max-width:68ch}
+.note .kick{font-family:var(--display);font-size:1.18rem;line-height:1.35;font-weight:600}
+/* formats */
+.fmts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;
+  border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.fmt{background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:9px;
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.fmt h4{font-size:1.04rem;line-height:1.28}
+.fmt p{font-size:.89rem;color:var(--ink-2);line-height:1.52}
+.fmt .ex{font-family:var(--display);font-style:italic;font-size:.95rem;line-height:1.42;
+  color:var(--ink);border-left:2px solid var(--brass);padding-left:12px;margin-top:2px}
+/* chapters */
+.chap{padding-top:42px;scroll-margin-top:12px}
+.chead{border-bottom:2px solid var(--ink);padding-bottom:12px;display:flex;flex-wrap:wrap;
+  gap:6px 16px;align-items:baseline}
+.chead .n{font-family:var(--mono);font-size:1rem;font-weight:600;color:var(--accent);
+  font-variant-numeric:tabular-nums}
+.chead h3{font-size:clamp(1.3rem,3.3vw,1.7rem);letter-spacing:-.01em}
+.chead .ct{margin-left:auto;font-family:var(--mono);font-size:.68rem;color:var(--muted);
+  letter-spacing:.07em;white-space:nowrap}
+.ckick{font-size:.96rem;color:var(--ink-2);max-width:70ch;padding-top:12px;padding-bottom:4px}
+.ideas{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:0;
+  border-top:1px solid var(--rule);border-left:1px solid var(--rule);margin-top:18px}
+.idea{background:var(--surface);padding:19px 21px 17px;display:flex;flex-direction:column;gap:10px;
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.idea h4{font-size:1.03rem;line-height:1.32}
+.usual{display:flex;flex-direction:column;gap:5px}
+.usual .lab{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--brass);font-weight:600}
+.usual p{font-size:.9rem;color:var(--ink-2);line-height:1.53}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:3px}
+.flag{font-family:var(--mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid var(--rule);color:var(--muted);white-space:nowrap}
+.flag.v{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.flag.t{color:var(--brass);border-color:var(--brass)}
+/* gaps */
+.gaps{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.gap-row{display:grid;grid-template-columns:minmax(0,215px) minmax(0,1fr);gap:18px;
+  padding-block:16px;border-bottom:1px solid var(--rule);align-items:start}
+.gap-row dt{font-family:var(--mono);font-size:.79rem;font-weight:500;color:var(--accent)}
+.gap-row dd{margin:0;font-size:.92rem;color:var(--ink-2);line-height:1.55}
+.legend{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px;font-size:.87rem;color:var(--muted)}
+.legend span b{font-family:var(--mono);font-size:.6rem;letter-spacing:.11em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid var(--rule);margin-right:8px}
+.legend .v b{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.legend .t b{color:var(--brass);border-color:var(--brass)}
+@media (max-width:560px){
+  body{font-size:16px}
+  .gap-row{grid-template-columns:1fr;gap:5px}
+  .chead .ct{margin-left:0}
+}
+</style>
+<div class="wrap">
+<header class="mast">
+<div class="eyebrow">Content bank &middot; companion to The Math Syllabus &middot; 11 Sep 2026</div>
+<h1>The <em>Usual</em></h1>
+<p class="logline">For brand and creative people who want fuck-you money and were handed the same paperwork as the engineers with half the context.</p>
+<div class="meta"><span><b>69</b> ideas</span><span><b>7</b> situations</span><span><b>8</b> recurring formats</span><span><b>15</b> need a verified number</span></div>
+</header>
+<section><div class="sechead"><div class="eyebrow">The angle</div><h2>Norms are the product, not definitions</h2></div>
+<div class="note">
+<p class="kick">Everybody explains what a liquidation preference <em>is</em>. Almost nobody says what&rsquo;s normal &mdash; which is the only thing that tells you whether you&rsquo;re being had.</p>
+<p>That&rsquo;s the whole differentiation and it follows from where you actually sit. A lawyer will define an ISO more accurately than you ever will. A lawyer will not tell a 28-year-old brand lead that four years with a one-year cliff is the default, that ninety days is the usual exercise window, or that nobody ever asks about the preference stack and the asking is free. Calibration is the product. You have it because you&rsquo;ve been in the rooms; they don&rsquo;t because nobody has ever shown them a second example.</p>
+<p>So every idea below carries two parts &mdash; the hook, and <strong>the usual</strong>. If an idea has no norm attached, it&rsquo;s a definition and it belongs to somebody else.</p>
+<p>The wedge inside the audience: brand, design, content and partnerships people <em>inside</em> tech and startup companies. They hold the same instruments as the engineers, and every piece of equity content on the internet is written for someone who reads a term sheet for fun.</p>
+</div>
+<div class="legend"><span class="v"><b>Check the number</b>Do not say this on camera until you have a current source.</span><span class="t"><b>Travels</b>Screenshot-shaped. Prioritise these when you need reach.</span></div>
+</section>
+<section><div class="sechead"><div class="eyebrow">Shapes</div><h2>Eight recurring formats</h2></div>
+<p class="lede" style="margin-bottom:24px">Pick the shape before the topic. A format the audience recognises is what turns sixty-nine ideas into a series rather than sixty-nine posts &mdash; and the first one below is the franchise.</p>
+<div class="fmts">
+<div class="fmt"><h4>The usual / not the usual</h4><p>Two columns. What's standard, then the version you were handed. The whole franchise in one shape — it turns a definition into a diagnosis, and the viewer checks their own paperwork while watching.</p><p class="ex">“Four years, one year cliff. That's the usual. Six years with a two-year cliff is not a company, it's a holding pen.”</p></div>
+<div class="fmt"><h4>The sentence you say back</h4><p>One moment, one line, delivered slowly enough to be written down. The highest-utility format you can make and the most re-watched.</p><p class="ex">“When they say we'll make it right at the next round — 'happy to wait, can we put the number and the date in the offer?'”</p></div>
+<div class="fmt"><h4>What they said / what it means</h4><p>Translation. Recruiter language, brand-side language, investor language, decoded. Works because these people all speak in the same eight euphemisms.</p><p class="ex">“'We don't have budget' has five meanings and only one of them is no.”</p></div>
+<div class="fmt"><h4>The number</h4><p>One benchmark, held on screen, no build-up. Shortest format, travels furthest, needs the most verification before you say it out loud.</p><p class="ex">“Ninety days. That's how long you have to find the money after you leave.”</p></div>
+<div class="fmt"><h4>Red flag / just unusual</h4><p>Calibration. Half of what scares people is standard and half of what looks standard should scare them. Being the person who can tell them apart is the whole authority claim.</p><p class="ex">“Participating preferred isn't illegal. It's just expensive, and it's expensive to you specifically.”</p></div>
+<div class="fmt"><h4>Ask this one thing</h4><p>A single question, plus what the answer tells you and what their face tells you. Self-contained, endlessly repeatable, works at any point in the series.</p><p class="ex">“Ask what the total preference is ahead of you. They will tell you. Nobody ever asks.”</p></div>
+<div class="fmt"><h4>The arithmetic, out loud</h4><p>Green screen, numbers appearing as you say them. Reserved for the four or five concepts that only land when someone watches the figure move.</p><p class="ex">“One percent, three rounds, twenty percent each. Say it with me.”</p></div>
+<div class="fmt"><h4>I was on the other side of this</h4><p>Your unfair advantage, used sparingly. Not a story format — a credential format. One sentence of it buys you the rest of the video.</p><p class="ex">“I've written the brief that had your fee in it. Here's what was in the other half of the document.”</p></div>
+</div></section>
+<section>
+<div class="chap" id="c1">
+<div class="chead"><span class="n">01</span><h3>You're being hired</h3><span class="ct">10 ideas</span></div>
+<p class="ckick">The moment with the most leverage and the least information. Almost everything here is askable and almost nobody asks.</p>
+<div class="ideas">
+<div class="idea">
+<h4>0.1% sounds like nothing and might be worth more than 1% somewhere else</h4>
+<div class="usual"><span class="lab">The usual</span><p>Equity gets quoted three ways — percentage, share count, or dollar value at the last round. Which one they lead with tells you what the other two would reveal.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The creative discount is real and it has a number</h4>
+<div class="usual"><span class="lab">The usual</span><p>Non-technical roles are typically granted materially less equity than engineers at the same level and stage. It's convention, not policy, which means it's arguable.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Your title is a compensation instrument</h4>
+<div class="usual"><span class="lab">The usual</span><p>Equity bands are set by level, not by person. Negotiating from Senior Manager to Director usually moves more equity than any conversation about the grant itself.</p></div>
+<div class="flags"><span class="flag v">Check the number</span></div>
+</div>
+<div class="idea">
+<h4>Negotiate the vesting, not the number</h4>
+<div class="usual"><span class="lab">The usual</span><p>Four years with a one-year cliff is the default. A shortened cliff, monthly vesting from day one, or double-trigger acceleration are all askable and cost the company nothing today.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The offer letter isn't the document that matters</h4>
+<div class="usual"><span class="lab">The usual</span><p>The stock plan and the grant agreement carry the terms. They're usually sent after you accept. Ask for both before.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Ask what the last 409A was</h4>
+<div class="usual"><span class="lab">The usual</span><p>It's the price your options are struck at and they have the number. Whether they hand it over or get strange is itself the answer.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>“We'll make it right at the next round”</h4>
+<div class="usual"><span class="lab">The usual</span><p>Worth nothing as a sentence. Worth something as a written number with a date and a trigger attached. Ask for the second version.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>What “competitive” means when a recruiter says it</h4>
+<div class="usual"><span class="lab">The usual</span><p>Competitive against a benchmark they've chosen and won't name. Ask which dataset, which stage, which geography.</p></div>
+</div>
+<div class="idea">
+<h4>Signing bonus, salary, or equity — which to push on</h4>
+<div class="usual"><span class="lab">The usual</span><p>Depends on stage. Early: equity, because the rest is small anyway. Late: cash, because the equity is priced and the upside is mostly gone.</p></div>
+</div>
+<div class="idea">
+<h4>The four questions that change how they see you</h4>
+<div class="usual"><span class="lab">The usual</span><p>Preference stack, fully diluted count, last 409A, exercise window. Asking these reads as sophisticated rather than greedy, which is itself useful information about the company.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+</div></div>
+<div class="chap" id="c2">
+<div class="chead"><span class="n">02</span><h3>You already signed something</h3><span class="ct">11 ideas</span></div>
+<p class="ckick">The paperwork most people read once, at the least sceptical moment of their lives.</p>
+<div class="ideas">
+<div class="idea">
+<h4>Equity, options, RSUs, phantom — sorted by what they do to you</h4>
+<div class="usual"><span class="lab">The usual</span><p>At a private company pre-IPO, options are most common. RSUs arrive later. Phantom shows up in agencies, family businesses and anything not venture-backed — which is where a lot of brand and creative people actually work.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Phantom stock is a bonus wearing a costume</h4>
+<div class="usual"><span class="lab">The usual</span><p>It's a contractual promise to pay cash tied to a valuation. No ownership, no voting, no capital gains treatment, and it dies if the company decides it does. Agencies love it for exactly those reasons.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Your ninety-day window is the most expensive line in the contract</h4>
+<div class="usual"><span class="lab">The usual</span><p>Ninety days after you leave to exercise, or the options vanish. Some companies offer extended windows of up to ten years. Almost nobody asks which one they're on until they resign.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Find your cliff date and put it in your calendar</h4>
+<div class="usual"><span class="lab">The usual</span><p>One year from start. Leaving in month eleven means you worked a year for salary alone. Nobody at the company will ever remind you.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Dilution is not theft, and here is when it is</h4>
+<div class="usual"><span class="lab">The usual</span><p>Every round issues new shares and your percentage shrinks. That's normal. A pool refresh taken out of the pre-money, so existing holders absorb all of it, is normal too — and worth knowing you're absorbing.</p></div>
+</div>
+<div class="idea">
+<h4>Liquidation preference in one sentence</h4>
+<div class="usual"><span class="lab">The usual</span><p>Investors get their money back before anyone else sees a dollar. One-times non-participating is standard. Anything above that appears when a company raised from a position of weakness.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Participating preferred, plainly</h4>
+<div class="usual"><span class="lab">The usual</span><p>They take their money back and then also take their percentage of what's left. Double dip. Legal, not rare, and it moves the sale price at which you see anything.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The non-solicit is the clause that matters more than the non-compete</h4>
+<div class="usual"><span class="lab">The usual</span><p>In a lot of places non-competes are hard to enforce. Non-solicits are enforced routinely, and they're the ones that stop you taking your team or your clients.</p></div>
+<div class="flags"><span class="flag v">Check the number</span></div>
+</div>
+<div class="idea">
+<h4>You might not be allowed to show your own work</h4>
+<div class="usual"><span class="lab">The usual</span><p>Work-for-hire assigns everything, including the right to display it. The portfolio carve-out is almost always granted and almost never requested.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>What happens to your equity if you go freelance for the same company</h4>
+<div class="usual"><span class="lab">The usual</span><p>Usually you stop vesting on the day the employment ends, even if the work continues. Continuity of work is not continuity of grant.</p></div>
+<div class="flags"><span class="flag v">Check the number</span></div>
+</div>
+<div class="idea">
+<h4>The AI clause nobody is reading yet</h4>
+<div class="usual"><span class="lab">The usual</span><p>Newer contracts contain language about generating derivative or synthetic material from delivered work. Worth finding out whether you've licensed them the right to produce more of you without you.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+</div></div>
+<div class="chap" id="c3">
+<div class="chead"><span class="n">03</span><h3>You're setting your price</h3><span class="ct">10 ideas</span></div>
+<p class="ckick">Where the money is actually won or lost for most people in this audience — repeatedly, quietly, for years.</p>
+<div class="ideas">
+<div class="idea">
+<h4>You're quoting cost-to-serve and calling it a rate</h4>
+<div class="usual"><span class="lab">The usual</span><p>Three different numbers: what it costs you to do it, what the market pays, what the outcome is worth to them. Most people quote the first and never find out the third.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>What the agency charges the client for the work you do</h4>
+<div class="usual"><span class="lab">The usual</span><p>Agencies bill a multiple of salary cost to cover overhead, benefits, management and margin. Going freelance at your old day rate means charging a fraction of what the work sells for.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>How many billable days you actually have</h4>
+<div class="usual"><span class="lab">The usual</span><p>Not 260. Subtract holiday, admin, pitching, invoicing, sick days and the weeks nothing lands. Solo practices run well under full utilisation and the annual number is the one that matters.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The day rate is a trap and here's the arithmetic</h4>
+<div class="usual"><span class="lab">The usual</span><p>Day rates invite counting days, cap your upside at your calendar, and punish you for getting faster. Project fees pay you for being good at this.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Kill fees exist and you should have one</h4>
+<div class="usual"><span class="lab">The usual</span><p>A percentage of the remaining fee if they cancel mid-project. Standard in production and editorial, rare in consulting only because consultants don't ask.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Net 60 is an interest-free loan you're extending</h4>
+<div class="usual"><span class="lab">The usual</span><p>Large companies default to 30, 60 or 90 day terms set by procurement, not by your client. It's negotiable more often at the contract stage than at the invoice stage.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Quote a range only if you'd be happy with the bottom of it</h4>
+<div class="usual"><span class="lab">The usual</span><p>They will hear the bottom. It isn't a negotiation tactic, it's a discount you offered before being asked.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Deposits: 50/50, or 30/40/30</h4>
+<div class="usual"><span class="lab">The usual</span><p>Money up front is standard practice, not an insult. A deposit is the thing that makes a cancellation expensive for them instead of only for you.</p></div>
+</div>
+<div class="idea">
+<h4>Raising rates on a client you already have</h4>
+<div class="usual"><span class="lab">The usual</span><p>Tie it to a date and a new scope rather than to your feelings about the work. The re-scope conversation is easier than the raise conversation and produces the same number.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The qualifying questions before you scope anything</h4>
+<div class="usual"><span class="lab">The usual</span><p>Budget range, decision-maker, timeline, and what happens if they do nothing. Scoping before you know these is unpaid work.</p></div>
+</div>
+</div></div>
+<div class="chap" id="c4">
+<div class="chead"><span class="n">04</span><h3>You're doing a deal</h3><span class="ct">13 ideas</span></div>
+<p class="ckick">Your own ground. The part where you've read the brief from the other side.</p>
+<div class="ideas">
+<div class="idea">
+<h4>You sold a post. They bought an asset.</h4>
+<div class="usual"><span class="lab">The usual</span><p>Paying for a post buys the post, organic, on your channel. Running it as an ad is buying media against something you made, and it's a separate line with a separate number.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Search the contract for the word perpetuity</h4>
+<div class="usual"><span class="lab">The usual</span><p>Term, territory, channel and spend are the four axes that price usage. Perpetuity removes one of them entirely. If it's in there and the fee didn't move, the fee was wrong.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Whitelisting, explained by what it costs you</h4>
+<div class="usual"><span class="lab">The usual</span><p>They run paid media through your handle so it reads as you. Your account carries the endorsement and their budget carries the reach. Price it as endorsement, not as a technical permission.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Exclusivity is forgone revenue, not a favour</h4>
+<div class="usual"><span class="lab">The usual</span><p>Price it as the deals you won't be able to take in that window. Twelve months of category exclusivity when you book four of those a year is most of your year.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Which budget is paying you sets your ceiling</h4>
+<div class="usual"><span class="lab">The usual</span><p>Brand, performance, innovation, trade, or the founder's discretionary line. Same deliverable, four different tolerances, four different approval paths.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The person emailing you cannot say yes</h4>
+<div class="usual"><span class="lab">The usual</span><p>Signing authority sits at a threshold, and the threshold is usually lower than people assume. Write the email that survives being forwarded upward, because it will be.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>“We don't have budget” has five meanings</h4>
+<div class="usual"><span class="lab">The usual</span><p>Not in this pot, not this quarter, not at this priority, no internal champion, or genuinely none. Four of the five are timing problems rather than a no.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Seeding: on-ramp or unpaid labour</h4>
+<div class="usual"><span class="lab">The usual</span><p>Seeding is normal and often genuinely useful early. It stops being an on-ramp the moment the brand is running paid media and still sending product instead of a fee.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>EMV is a number brands know is soft</h4>
+<div class="usual"><span class="lab">The usual</span><p>Earned media value is a modelled figure with no agreed methodology. It appears in decks because something has to. Knowing it's soft changes how you argue about your own reporting.</p></div>
+<div class="flags"><span class="flag v">Check the number</span></div>
+</div>
+<div class="idea">
+<h4>Ask what the client is being charged for you</h4>
+<div class="usual"><span class="lab">The usual</span><p>When an agency sits between you and the brand, there's a markup. It's normal. Knowing roughly what it is tells you where your rate actually sits in the deal.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Rev share without a floor is a free option</h4>
+<div class="usual"><span class="lab">The usual</span><p>If you don't control the landing page, the pricing, the stock, or the attribution window, you've taken performance risk on decisions you can't influence.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Why deals die internally, and how to keep yours alive</h4>
+<div class="usual"><span class="lab">The usual</span><p>Rarely price. Usually a champion who moved, a quarter that closed, a legal queue, or nobody senior who could describe why you specifically.</p></div>
+</div>
+<div class="idea">
+<h4>What gets you re-booked</h4>
+<div class="usual"><span class="lab">The usual</span><p>Being easy to run through a legal and finance process. Unglamorous, commercially decisive, and almost never discussed as a skill.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+</div></div>
+<div class="chap" id="c5">
+<div class="chead"><span class="n">05</span><h3>You're reading the room</h3><span class="ct">7 ideas</span></div>
+<p class="ckick">The part that isn't in any contract and decides most outcomes.</p>
+<div class="ideas">
+<div class="idea">
+<h4>Read the org chart for authority, not title</h4>
+<div class="usual"><span class="lab">The usual</span><p>Economic buyer, champion, blocker. Titles tell you rank. Only one of those three can actually release money.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Information asymmetry is the real currency</h4>
+<div class="usual"><span class="lab">The usual</span><p>Everything in this series is known by someone in the room already. The advantage isn't intelligence, it's having been in the room before.</p></div>
+</div>
+<div class="idea">
+<h4>What you're owed when you're paid in access</h4>
+<div class="usual"><span class="lab">The usual</span><p>Access, proximity, information and optionality are real compensation and should be priced. The tell that it's exposure with extra steps: remove the access and see if you'd still take it.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Set the walk-away number before the call</h4>
+<div class="usual"><span class="lab">The usual</span><p>Decide it when you're calm, write it down, and don't revise it while someone is talking to you.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Negotiating when you actually need the money</h4>
+<div class="usual"><span class="lab">The usual</span><p>The hardest version, and the one nobody makes content about. What you can still control: silence, sequencing, and what you ask before you answer.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Small industry, long memory</h4>
+<div class="usual"><span class="lab">The usual</span><p>How you leave is a commercial asset. The people on the other side of your next three deals already know someone you've worked with.</p></div>
+</div>
+<div class="idea">
+<h4>Sponsorship versus mentorship</h4>
+<div class="usual"><span class="lab">The usual</span><p>A mentor tells you things. A sponsor says your name when you aren't there. Only one of them changes your income.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+</div></div>
+<div class="chap" id="c6">
+<div class="chead"><span class="n">06</span><h3>You're building something of your own</h3><span class="ct">9 ideas</span></div>
+<p class="ckick">Where fuck-you money actually comes from for this audience, more often than from a grant.</p>
+<div class="ideas">
+<div class="idea">
+<h4>Income stops when you do. What doesn't?</h4>
+<div class="usual"><span class="lab">The usual</span><p>The six-month test: if you stopped for half a year, what still earns? That list is the asset and everything else is a job with better branding.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>What someone is actually buying if they buy your practice</h4>
+<div class="usual"><span class="lab">The usual</span><p>Contracts, IP, audience, systems and team. If the answer is “me”, there's nothing to sell, which is a fine choice as long as it's a choice.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Service, product, platform — the honest economics</h4>
+<div class="usual"><span class="lab">The usual</span><p>Each step trades margin for leverage and adds a completely different job. Most people skip the part where the job changes.</p></div>
+</div>
+<div class="idea">
+<h4>The newsletter is the asset. The follower count is the weather.</h4>
+<div class="usual"><span class="lab">The usual</span><p>Owned distribution can be moved, sold and valued. Rented distribution can be halved overnight by someone else's product decision.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Why service businesses sell for so much less than product businesses</h4>
+<div class="usual"><span class="lab">The usual</span><p>Multiples track how much of the revenue survives the founder leaving. That's the whole explanation and it's also the to-do list.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Licensing your own frameworks</h4>
+<div class="usual"><span class="lab">The usual</span><p>If you explain the same thing to every client, it's a product you're giving away inside a service you're discounting.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>The advisor deal: what they're buying is your name on the deck</h4>
+<div class="usual"><span class="lab">The usual</span><p>Standard advisor grants are small and vest over one to two years. Perfectly fine — as long as you know that's the trade and price the rest accordingly.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Four questions before you take equity instead of cash</h4>
+<div class="usual"><span class="lab">The usual</span><p>Preference stack, amount raised against it, last 409A, and what happens to your grant in an acquihire. Same four questions as the job offer, because it's the same instrument.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Small cheques: what a brand person brings that a VC doesn't</h4>
+<div class="usual"><span class="lab">The usual</span><p>Distribution, positioning, and the ability to tell whether the thing is actually good. Under-priced by the people who have it.</p></div>
+</div>
+</div></div>
+<div class="chap" id="c7">
+<div class="chead"><span class="n">07</span><h3>Money actually moves</h3><span class="ct">9 ideas</span></div>
+<p class="ckick">The endings. Most people only picture one of them.</p>
+<div class="ideas">
+<div class="idea">
+<h4>Five endings, not one</h4>
+<div class="usual"><span class="lab">The usual</span><p>IPO, strategic acquisition, acquihire, private equity roll-up, or private forever. Your grant behaves differently under each and most people have only modelled the first.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Acquihire: the team is the asset and the product gets switched off</h4>
+<div class="usual"><span class="lab">The usual</span><p>Common, rarely announced as such, and the outcome where employee equity most often goes to nothing while senior people are made whole through retention packages.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Retention pools are carved out of the purchase price</h4>
+<div class="usual"><span class="lab">The usual</span><p>Which means the headline number and the amount available to shareholders are different numbers, and being inside the pool matters more than your grant does.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Earnouts: why founders stay two more years looking miserable</h4>
+<div class="usual"><span class="lab">The usual</span><p>Part of the price is contingent on hitting targets after the sale. It's why the acquisition number in the press release is often not the number anyone receives.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Secondaries: how people get paid before an IPO</h4>
+<div class="usual"><span class="lab">The usual</span><p>The company organises a window, existing shares change hands, no new money enters the business. Increasingly the main way private-company employees see cash.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Sold for two hundred million, team got nothing, nobody did anything wrong</h4>
+<div class="usual"><span class="lab">The usual</span><p>The preference stack was in the documents from the beginning. This is the single most useful thing in the whole series and it takes forty seconds.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>Borrowing against equity, including the part nobody says</h4>
+<div class="usual"><span class="lab">The usual</span><p>You can turn illiquid shares into cash by giving someone a claim on them. If the valuation falls the loan doesn't, and the collateral is the thing you were trying to keep.</p></div>
+<div class="flags"><span class="flag t">Travels</span></div>
+</div>
+<div class="idea">
+<h4>What happens to unvested shares in each exit</h4>
+<div class="usual"><span class="lab">The usual</span><p>Usually they're assumed, converted, or cancelled, and which one is decided by the acquirer, not by you. Double-trigger acceleration is the clause that protects against the third.</p></div>
+</div>
+<div class="idea">
+<h4>You got the cheque. The first three decisions.</h4>
+<div class="usual"><span class="lab">The usual</span><p>Tax owed and when, what's genuinely liquid versus locked, and the six months of doing nothing that almost everyone says afterwards they wish they'd taken.</p></div>
+<div class="flags"><span class="flag v">Check the number</span><span class="flag t">Travels</span></div>
+</div>
+</div></div>
+</section>
+<section><div class="sechead"><div class="eyebrow">Before you shoot</div><h2>Where this still needs you</h2></div>
+<dl class="gaps">
+<div class="gap-row"><dt>The fifteen flagged numbers</dt><dd>Every idea marked in pink states a benchmark I have not verified against a current source. Carta and Pave publish equity band data; agency multiples and utilisation rates vary enough by market that a single figure is misleading. Get the real number or reframe the idea so it doesn't need one — saying a wrong benchmark confidently is the one failure this whole series cannot survive.</dd></div>
+<div class="gap-row"><dt>Your side of the table</dt><dd>Chapter 04 is the only one where you can say “I've written the brief your fee was in.” That sentence is worth more than any statistic here and it can't be borrowed. Mark which of those thirteen you've personally seen go wrong.</dd></div>
+<div class="gap-row"><dt>Rad School of Growth</dt><dd>Still unreachable from this session — it's a Claude Project and no tool here opens one. Chapters 03 and 06 are the ones your existing frameworks should be carrying, and right now they're carrying mine.</dd></div>
+<div class="gap-row"><dt>The partnerships session</dt><dd>Same. Chapter 04 is a first pass built from general practice. It's the chapter most likely to be wrong in the specifics and the one you're most qualified to correct.</dd></div>
+<div class="gap-row"><dt>What's deliberately missing</dt><dd>No tax content, no investment advice, no “here's what to do with the money.” Different liability, different register, and the moment the series gives financial advice it stops being yours and starts being regulated.</dd></div>
+</dl></section>
+</div>
