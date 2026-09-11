@@ -1,0 +1,580 @@
+<title>Thirty Days of the Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E9EEE6; --surface:#F5F8F2; --surface-2:#DEE6D9; --sunk:#E1E8DC;
+  --ink:#141C17; --ink-2:#3B4940; --muted:#66756B; --rule:#C6D1C0;
+  --accent:#A81F55; --accent-soft:#F3DCE5; --brass:#856A20;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Karla",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#121711; --surface:#1A211A; --surface-2:#242C23; --sunk:#0D120C;
+    --ink:#E7ECE3; --ink-2:#C3CDBE; --muted:#8D9B88; --rule:#2F382D;
+    --accent:#F2739F; --accent-soft:#3B1C28; --brass:#D3B25D;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121711; --surface:#1A211A; --surface-2:#242C23; --sunk:#0D120C;
+  --ink:#E7ECE3; --ink-2:#C3CDBE; --muted:#8D9B88; --rule:#2F382D;
+  --accent:#F2739F; --accent-soft:#3B1C28; --brass:#D3B25D;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.62;margin:0;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:22px;padding-block:0 96px}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.12;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--ink-2);max-width:64ch}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);font-weight:500}
+.stack{display:flex;flex-direction:column}
+.g8{gap:8px}.g12{gap:12px}.g16{gap:16px}.g20{gap:20px}.g28{gap:28px}.g40{gap:40px}
+
+/* masthead */
+header.mast{border-bottom:1px solid var(--rule);padding-block:56px 40px;
+  display:flex;flex-direction:column;gap:22px}
+.mast h1{font-size:clamp(2.9rem,9vw,5.1rem);letter-spacing:-.02em;font-weight:700}
+.mast h1 em{font-style:italic;color:var(--accent)}
+.logline{font-family:var(--display);font-size:clamp(1.1rem,2.6vw,1.4rem);
+  font-style:italic;color:var(--ink-2);max-width:40ch;line-height:1.35}
+.meta{display:flex;flex-wrap:wrap;gap:10px 26px;font-family:var(--mono);
+  font-size:.74rem;letter-spacing:.05em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:500}
+
+section{padding-block:52px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:none}
+.sechead{display:flex;flex-direction:column;gap:10px;margin-bottom:30px}
+.sechead h2{font-size:clamp(1.7rem,4.4vw,2.4rem);letter-spacing:-.01em}
+
+/* the call */
+.verdict{background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);padding:26px 28px;display:flex;
+  flex-direction:column;gap:16px}
+.verdict p{max-width:66ch}
+.verdict .kicker{font-family:var(--display);font-size:1.24rem;line-height:1.35;
+  font-weight:600;text-wrap:balance}
+.probs{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin-top:4px}
+.prob{background:var(--surface);padding:20px 20px 22px;display:flex;
+  flex-direction:column;gap:8px}
+.prob .n{font-family:var(--mono);font-size:.72rem;color:var(--accent);font-weight:600;
+  letter-spacing:.1em}
+.prob h4{font-size:1.02rem;line-height:1.28}
+.prob p{font-size:.9rem;color:var(--ink-2);line-height:1.55}
+
+/* name */
+.namegrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  gap:34px;align-items:start}
+.namecard{background:var(--accent-soft);border:1px solid var(--rule);padding:26px 28px;
+  display:flex;flex-direction:column;gap:14px}
+.namecard .big{font-family:var(--display);font-size:clamp(2.2rem,6vw,3.1rem);
+  font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--accent)}
+.namecard p{font-size:.94rem;color:var(--ink-2);max-width:44ch}
+.altlist{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+.alt{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:16px;
+  padding-block:13px;border-bottom:1px solid var(--rule);align-items:baseline}
+.alt dt{font-family:var(--mono);font-size:.82rem;font-weight:500;color:var(--ink)}
+.alt dd{margin:0;font-size:.89rem;color:var(--muted);line-height:1.5}
+
+/* format spec */
+.spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule)}
+.spec div{background:var(--surface);padding:18px 20px;display:flex;
+  flex-direction:column;gap:6px}
+.spec dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+.spec dd{margin:0;font-size:.95rem;color:var(--ink);line-height:1.45}
+
+/* modules + days */
+.module{margin-top:44px}
+.modhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
+  padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.modhead .wk{font-family:var(--mono);font-size:.76rem;font-weight:600;
+  letter-spacing:.1em;color:var(--accent)}
+.modhead h3{font-size:1.42rem;letter-spacing:-.01em}
+.modhead .shoot{margin-left:auto;font-family:var(--mono);font-size:.7rem;
+  color:var(--muted);letter-spacing:.06em}
+.day{display:grid;grid-template-columns:56px minmax(0,1fr);gap:20px;
+  padding-block:22px;border-bottom:1px solid var(--rule);align-items:start}
+.day .num{font-family:var(--mono);font-size:1.5rem;font-weight:600;color:var(--accent);
+  font-variant-numeric:tabular-nums;line-height:1.1;padding-top:1px}
+.day .bod{display:flex;flex-direction:column;gap:9px;min-width:0}
+.day h4{font-size:1.12rem;line-height:1.3}
+.day .angle{font-size:.96rem;color:var(--ink-2);max-width:68ch}
+.anchor{font-family:var(--mono);font-size:.79rem;line-height:1.62;color:var(--ink-2);
+  background:var(--sunk);border-left:2px solid var(--brass);padding:9px 13px;
+  max-width:74ch}
+.anchor b{color:var(--brass);font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;font-size:.7rem}
+.tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--rule);padding:2px 7px;border-radius:2px;
+  white-space:nowrap}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px}
+
+/* scripts */
+.script{background:var(--surface);border:1px solid var(--rule);margin-top:28px;
+  display:flex;flex-direction:column}
+.script .head{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;
+  padding:16px 26px;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.script .head .d{font-family:var(--mono);font-size:.74rem;font-weight:600;
+  color:var(--accent);letter-spacing:.1em}
+.script .head h4{font-size:1.08rem}
+.script .head .len{margin-left:auto;font-family:var(--mono);font-size:.7rem;
+  color:var(--muted);letter-spacing:.06em}
+.spoken{padding:26px;font-size:1.11rem;line-height:1.78;max-width:60ch;color:var(--ink)}
+.gap{color:var(--accent);font-weight:700;font-family:var(--mono);font-size:.86rem;
+  background:var(--accent-soft);padding:1px 5px}
+.script dl.foot{margin:0;border-top:1px solid var(--rule);padding:16px 26px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px 28px}
+.script .foot div{display:flex;flex-direction:column;gap:4px}
+.script .foot dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted)}
+.script .foot dd{margin:0;font-size:.88rem;color:var(--ink-2);line-height:1.5}
+
+/* production */
+.prod{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.pcard{border:1px solid var(--rule);background:var(--surface);padding:20px 22px;
+  display:flex;flex-direction:column;gap:9px}
+.pcard h4{font-size:1.04rem}
+.pcard p{font-size:.9rem;color:var(--ink-2);line-height:1.55}
+.pcard ul{margin:0;padding-left:17px;font-size:.89rem;color:var(--ink-2);line-height:1.6}
+.pcard li{margin-bottom:4px}
+
+/* gaps */
+.gaps{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+.gap-row{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr);gap:18px;
+  padding-block:16px;border-bottom:1px solid var(--rule);align-items:start}
+.gap-row dt{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--accent)}
+.gap-row dd{margin:0;font-size:.92rem;color:var(--ink-2);line-height:1.55}
+
+@media (max-width:760px){
+  body{font-size:16px}
+  .namegrid{grid-template-columns:1fr;gap:26px}
+  .day{grid-template-columns:40px minmax(0,1fr);gap:14px}
+  .day .num{font-size:1.18rem}
+  .alt,.gap-row{grid-template-columns:1fr;gap:5px}
+  .spoken{padding:20px;font-size:1.05rem}
+  .script .head,.script .foot{padding-inline:20px}
+  .modhead .shoot{margin-left:0;flex-basis:100%}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Series architecture &middot; 11 Sep 2026</div>
+  <h1>Thirty Days of <em>the Math</em></h1>
+  <p class="logline">The economics of the creative economy, taught by the person who sits on the other side of the table.</p>
+  <div class="meta">
+    <span><b>30</b> entries &middot; <b>6</b> modules</span>
+    <span><b>6</b> shoot days, not 30</span>
+    <span>Registers: pundit &middot; observation &middot; personal</span>
+    <span>Logline in the bio: <b>an MBA for hot girls</b></span>
+  </div>
+</header>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">The call</div>
+    <h2>Yes, there's a series here. Not the one you described.</h2>
+  </div>
+  <div class="verdict">
+    <p class="kicker">&ldquo;MBA for hot girls&rdquo; is a great tone brief and a bad franchise name. Keep the first job, drop the second.</p>
+    <p>The instruction it encodes &mdash; low solemnity, high taste, explain the real thing without the reverence &mdash; should govern every single script. But as the <em>name</em> of the thing, it puts you fourth in a line behind people with bigger audiences and finance credentials you don't claim, doing a format that is now the most commoditised thing on the internet: the explainer. Any chatbot explains a 409A. Nobody else can tell you what happened in the room when the 409A mattered.</p>
+    <p>The version only you can make: you were <em>in</em> the rooms. You've sat on the buying side of a creator deal. You've watched founders sign things. The series isn't &ldquo;finance for women&rdquo; &mdash; it's <strong>how money and power actually move through the creative economy</strong>, from someone who has been on both sides of the table and will say which side she was on.</p>
+    <div class="probs">
+      <div class="prob"><span class="n">01</span><h4>The lane is occupied</h4><p>Hot Smart Rich <em>is</em> this. Your Rich BFF, Mrs. Dow Jones, Girls That Invest. Launching into their format means competing on their terms.</p></div>
+      <div class="prob"><span class="n">02</span><h4>&ldquo;MBA&rdquo; caps you at explainer</h4><p>An MBA teaches a syllabus someone else wrote. Your whole edge is that you wrote yours by being there.</p></div>
+      <div class="prob"><span class="n">03</span><h4>It shrinks the audience</h4><p>You said you work with founders and leaders too. &ldquo;Hot girls&rdquo; is a tone, not an audience &mdash; don't let it decide the room.</p></div>
+      <div class="prob"><span class="n">04</span><h4>What survives</h4><p>The irreverence. The refusal to be solemn about money. That's the actual asset and it goes in every script, not on the cover.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">Naming</div>
+    <h2>Call it the thing you already say</h2>
+  </div>
+  <div class="namegrid">
+    <div class="namecard">
+      <div class="eyebrow">Recommended</div>
+      <div class="big">THE MATH</div>
+      <p>Already in your lexicon &mdash; it's on the use-list in your own voice file, next to <em>the read</em> and <em>the texture</em>. It covers equity math, dilution math, deal math, rate math, all thirty days. It's a coined term in caps, which is your Tariro move. And it's short enough to say at the top of every video: <em>&ldquo;Day 12. Here's the math.&rdquo;</em></p>
+      <p><strong>Sits under Rad School of Growth</strong> as its first term &mdash; assuming RSOG is the parent brand you described. You already own that; borrowing &ldquo;MBA&rdquo; from a business school you didn't attend is the weaker move.</p>
+    </div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:14px">Where the joke goes instead</div>
+      <dl class="altlist">
+        <div class="alt"><dt>Bio line</dt><dd>&ldquo;An MBA for hot girls&rdquo; &mdash; works perfectly as a description. Fails as a title.</dd></div>
+        <div class="alt"><dt>Series card</dt><dd>THE MATH, No. 14 &mdash; matches your macro-trends numbering discipline.</dd></div>
+        <div class="alt"><dt>Spoken</dt><dd>&ldquo;Day 14. The math on exclusivity.&rdquo; Four words, no throat-clearing.</dd></div>
+        <div class="alt"><dt>Runners-up</dt><dd><strong>Other Side of the Table</strong> (most descriptive of your vantage, least memorable). <strong>The Cap Table</strong> (sharp, but narrows to week one's subject).</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">Format</div>
+    <h2>One thing a day, with a number in it</h2>
+  </div>
+  <dl class="spec">
+    <div><dt>Cadence</dt><dd>6 weeks &times; 5 weekdays. Not 30 consecutive days &mdash; weekends kill series.</dd></div>
+    <div><dt>Length</dt><dd>40&ndash;60s. Pundit days can run to 75s. Never past 90s.</dd></div>
+    <div><dt>Shape</dt><dd>Name the mechanism &rarr; run one real number through it &rarr; say the thing nobody says. Stop.</dd></div>
+    <div><dt>Non-negotiable</dt><dd>Every entry carries one real figure, contract, or named deal. No day is a vibe.</dd></div>
+    <div><dt>Register</dt><dd>Pundit for mechanics, observation for patterns, personal only for days 1 and 30.</dd></div>
+    <div><dt>CTA</dt><dd>None. Ever. Same rule as everything else you make.</dd></div>
+  </dl>
+  <p class="lede" style="margin-top:24px">The thing that makes this series rather than thirty posts: the arc runs <strong>ownership &rarr; valuation &rarr; the deal &rarr; the price &rarr; leverage &rarr; compounding</strong>. Someone who watches all six weeks understands how a dollar travels from a brand's budget to a person's net worth. Someone who enters on day 19 still gets a whole answer.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">The curriculum</div>
+    <h2>Thirty days</h2>
+  </div>
+
+  <div class="module">
+    <div class="modhead"><span class="wk">Week 01</span><h3>What you actually own</h3><span class="shoot">Shoot day 1</span></div>
+
+    <div class="day"><div class="num">01</div><div class="bod">
+      <h4>&ldquo;I have equity&rdquo; is four words hiding four variables</h4>
+      <p class="angle">The series opener. How many shares, what class, at what strike, on what schedule &mdash; change any one and the sentence means something completely different. Also where you say out loud that you're learning half of this in public.</p>
+      <div class="anchor"><b>Anchor</b><br>Canva, August 2025: employee share sale priced at <strong>$1,646.14</strong> a share, $42B valuation, up to $3m per person. So &ldquo;I have 500 shares&rdquo; is a real number &mdash; on one specific day, under one specific set of conditions.</div>
+      <div class="tagrow"><span class="tag">Personal realization</span><span class="tag">Full script below</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">02</div><div class="bod">
+      <h4>The cliff is the cruelest date in tech</h4>
+      <p class="angle">Vesting schedules, the one-year cliff, monthly vs quarterly vesting after it. Why quitting at month eleven means you worked a year for salary alone, and why nobody tells you the date.</p>
+      <div class="anchor"><b>Anchor</b><br>Standard 4-year / 1-year cliff. Run one person's leave date through it: month 11 vs month 13. Same job, same work, wildly different outcome.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">03</div><div class="bod">
+      <h4>Options, RSUs, phantom, and &ldquo;we'll sort it out later&rdquo;</h4>
+      <p class="angle">Four things people call equity. Only three of them are. The fourth is what creative hires and early freelancers actually get offered, and it's worth naming as the non-thing it is.</p>
+      <div class="anchor"><b>Anchor</b><br>The tax trap: exercising options creates a bill on paper gains you can't sell. People take loans to pay tax on money they haven't received.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">04</div><div class="bod">
+      <h4>Your 1% becomes 0.4% and nobody stole anything</h4>
+      <p class="angle">Dilution, arithmetically, on camera. Every round issues new shares; your slice shrinks while the pie grows. The honest version: dilution is fine if the pie grows faster than your slice shrinks, and that is the only question.</p>
+      <div class="anchor"><b>Anchor</b><br>Run 1% through seed &rarr; A &rarr; B &rarr; C at a standard 20% dilution per round. 1% &rarr; 0.8% &rarr; 0.64% &rarr; 0.51% &rarr; <strong>0.41%</strong>. Say the numbers out loud.</div>
+      <div class="tagrow"><span class="tag">Pundit</span><span class="tag">Green screen &mdash; show the math</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">05</div><div class="bod">
+      <h4>The line that decides whether you get anything</h4>
+      <p class="angle">Liquidation preference. The single most consequential clause nobody reads before signing an offer letter. This is the most valuable day in the series &mdash; treat it accordingly.</p>
+      <div class="anchor"><b>Anchor</b><br>$30m raised, 1&times; preference, company sells for $35m. Investors take $30m. $5m for everyone who worked there. At 2&times; participating there is no sale price at which staff get paid.</div>
+      <div class="tagrow"><span class="tag">Pundit</span><span class="tag">Full script below</span></div>
+    </div></div>
+  </div>
+
+  <div class="module">
+    <div class="modhead"><span class="wk">Week 02</span><h3>What it's worth on paper</h3><span class="shoot">Shoot day 2</span></div>
+
+    <div class="day"><div class="num">06</div><div class="bod">
+      <h4>A valuation is not a price</h4>
+      <p class="angle">It's the number one investor paid for one slice on one day, multiplied out across every share as if they'd buy them all at that price. They would not. Post-money valuation as a mostly-fictional artifact everyone agrees to treat as real.</p>
+      <div class="anchor"><b>Anchor</b><br>Canva's $42B is what the tender was <em>priced</em> at. A single buyer setting a clearing price for a sliver is not a market valuing the whole company.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">07</div><div class="bod">
+      <h4>Secondaries: how paper becomes money before an IPO</h4>
+      <p class="angle">The mechanic in full. A tender offer is the company organising a sanctioned window where employees sell existing shares to incoming investors. No new money enters the company. This is the day the original podcast question actually gets answered.</p>
+      <div class="anchor"><b>Anchor</b><br>Canva, Aug 2025: $1,646.14/share, cap of $3m per employee, buyers included Fidelity and JPMorgan's asset management arm, and it was reported significantly oversubscribed.</div>
+      <div class="tagrow"><span class="tag">Pundit</span><span class="tag">Pin this one</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">08</div><div class="bod">
+      <h4>Why a company lets you cash out (it isn't generosity)</h4>
+      <p class="angle">Tenders are a retention instrument. Staff who've been there eight years with no liquidity leave. A tender resets the clock without an IPO. And &ldquo;oversubscribed&rdquo; tells you something specific: more people wanted in than were let in, which is a price signal the company chose to publish.</p>
+      <div class="anchor"><b>Anchor</b><br>Companies rarely run a tender immediately before listing &mdash; which is why Canva's read as a signal the IPO was still some distance out.</div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">09</div><div class="bod">
+      <h4>Borrowing against equity &mdash; the house thing</h4>
+      <p class="angle">The part of the podcast that sounded like a cheat code. You can borrow against private shares to buy a house. What that actually is, who lends, and the thing nobody says out loud: if the valuation falls, the loan doesn't, and the collateral is the shares.</p>
+      <div class="anchor"><b>Anchor</b><br>Frame as the trade it is: you're converting an illiquid asset into liquid cash by giving someone a claim on the asset. Name the downside case explicitly.</div>
+      <div class="tagrow"><span class="tag">Pundit</span><span class="tag">Handle carefully &mdash; not advice</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">10</div><div class="bod">
+      <h4>Five exits, five completely different outcomes</h4>
+      <p class="angle">IPO, strategic acquisition, acquihire, private equity roll-up, stay private forever. Each one means something different for the person holding 500 shares, and most people only picture the first.</p>
+      <div class="anchor"><b>Anchor</b><br>Ali Kriegsman built Bulletin from a newsletter at 24 into a wholesale marketplace and sold to Emerald Holding for roughly <strong>$10m in 2022</strong>. A real exit at a realistic number &mdash; the useful counterweight to the $42B story. She writes about the aftermath in New Motives.</div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+  </div>
+
+  <div class="module">
+    <div class="modhead"><span class="wk">Week 03</span><h3>How brand money actually moves</h3><span class="shoot">Shoot day 3 &mdash; your turf</span></div>
+
+    <div class="day"><div class="num">11</div><div class="bod">
+      <h4>Your rate is set by which budget you're being paid from</h4>
+      <p class="angle">Brand, performance, innovation, or the founder's discretionary line. Four pots with four approval paths, four measurement regimes and four completely different tolerances for your number. Knowing which one you're in matters more than your follower count.</p>
+      <div class="anchor"><b>Anchor</b><br>Same creator, same deliverable, two brands: one paying from performance (measured on CAC, will haggle) and one from brand (measured on awareness, won't).</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">12</div><div class="bod">
+      <h4>The person emailing you cannot say yes</h4>
+      <p class="angle">The org chart of a brand deal &mdash; coordinator, manager, director, VP, procurement, legal. Where a deal actually dies and how to write an email that survives being forwarded upward, because it will be.</p>
+      <div class="anchor"><b>Anchor</b><br>Practitioner detail: name the two documents that get forwarded internally and make sure your number lives in both.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">13</div><div class="bod">
+      <h4>Usage rights are the most underpriced line in the contract</h4>
+      <p class="angle">Organic vs paid vs whitelisting vs perpetuity. When a brand runs your post as an ad they've stopped buying a post and started buying media against an asset you made. Priced on term, territory and spend &mdash; not &ldquo;plus 20%&rdquo;.</p>
+      <div class="anchor"><b>Anchor</b><br>The word to search for in a contract: <strong>perpetuity</strong>. If it's there and the rate didn't move, the whole thing was sold for the price of a post.</div>
+      <div class="tagrow"><span class="tag">Pundit</span><span class="tag">Full script below</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">14</div><div class="bod">
+      <h4>What a category lockout is actually worth</h4>
+      <p class="angle">Exclusivity priced properly: how many deals in that category you'd realistically book in the window, times your rate, plus a premium for the risk that a better one appears. Most people accept 12 months of exclusivity for free because it's on page four.</p>
+      <div class="anchor"><b>Anchor</b><br>Show the arithmetic: 12-month beauty exclusivity when you book four beauty deals a year is not a clause, it's four-fifths of your year.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">15</div><div class="bod">
+      <h4>The brief behind the brief</h4>
+      <p class="angle">Every brief has a second brief underneath it: what the person who wrote it is personally measured on this quarter. Find that and your leverage doubles, because you stop selling content and start solving their review.</p>
+      <div class="anchor"><b>Anchor</b><br>Your own consulting practice &mdash; a real moment where knowing the internal metric changed the shape of the work. <span class="gap">[YOUR EXAMPLE]</span></div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+  </div>
+
+  <div class="module">
+    <div class="modhead"><span class="wk">Week 04</span><h3>How to price</h3><span class="shoot">Shoot day 4</span></div>
+
+    <div class="day"><div class="num">16</div><div class="bod">
+      <h4>Rate, value and cost-to-serve are three different numbers</h4>
+      <p class="angle">Most people quote cost-to-serve (my time &times; what I need) and call it a rate. Value is what the outcome is worth to them. The gap between those two numbers is the entire conversation.</p>
+      <div class="anchor"><b>Anchor</b><br>Same deliverable priced three ways, out loud, with the three numbers stated.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">17</div><div class="bod">
+      <h4>Day rate, project fee, retainer, or cash-plus-equity</h4>
+      <p class="angle">Four instruments, four risk profiles. Day rates cap you. Project fees reward speed. Retainers buy predictability and cost flexibility. Cash-plus-equity is a bet you should only take with information &mdash; which is what week one was for.</p>
+      <div class="anchor"><b>Anchor</b><br>The tell: when a client asks for your day rate, they're planning to count days.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">18</div><div class="bod">
+      <h4>The scope is the product, and it names what's excluded</h4>
+      <p class="angle">A scope that only lists inclusions isn't a scope, it's a wish. The line that protects the work is the one that says what isn't in it. This is a discipline you already run &mdash; teach it.</p>
+      <div class="anchor"><b>Anchor</b><br>Show a real exclusion line from your own scoping language, anonymised. <span class="gap">[YOUR TEMPLATE]</span></div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">19</div><div class="bod">
+      <h4>The number goes first and it goes naked</h4>
+      <p class="angle">No justification before the figure, no range as a hedge, no apology after. The padding is what tells them it's negotiable. Say it, stop talking, let it sit.</p>
+      <div class="anchor"><b>Anchor</b><br>Two versions of the same sentence read aloud &mdash; padded and naked. The difference is audible, which is why this one is a video and not a post.</div>
+      <div class="tagrow"><span class="tag">Hot take</span><span class="tag">Comic close</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">20</div><div class="bod">
+      <h4>Rev share is sometimes money and sometimes a free option</h4>
+      <p class="angle">When performance deals are real upside and when you've handed a brand a free call option on your audience. The questions: who controls the conversion surface, who owns the data, and is there a floor.</p>
+      <div class="anchor"><b>Anchor</b><br>Affiliate at 10% of a product you don't control the landing page for, versus rev share with a floor and a reporting clause. Name the three questions.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+  </div>
+
+  <div class="module">
+    <div class="modhead"><span class="wk">Week 05</span><h3>Leverage</h3><span class="shoot">Shoot day 5</span></div>
+
+    <div class="day"><div class="num">21</div><div class="bod">
+      <h4>Income stops when you do. An asset doesn't.</h4>
+      <p class="angle">The structural difference between a freelance practice and a business, said plainly. Not a mindset thing &mdash; a balance sheet thing. What you'd be selling if someone tried to buy what you've built, and whether the answer is &ldquo;nothing, it's me&rdquo;.</p>
+      <div class="anchor"><b>Anchor</b><br>The test: if you stopped for six months, what still earns? That list is the asset. Everything else is a job with better branding.</div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">22</div><div class="bod">
+      <h4>An audience is collateral, and it has a buyer</h4>
+      <p class="angle">What a list, a show or a community is actually worth and to whom &mdash; and why owned distribution (email, a podcast feed) is valued completely differently from rented distribution (a follower count on someone else's platform).</p>
+      <div class="anchor"><b>Anchor</b><br>Bulletin started as a newsletter. Hot Smart Rich is a newsletter with a podcast attached, which joined Steven Bartlett's FlightStory. Media properties get bought; follower counts don't.</div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">23</div><div class="bod">
+      <h4>Work-for-hire, and the clause that quietly takes your portfolio</h4>
+      <p class="angle">Who owns what you made. The difference between assigning the deliverable and assigning everything adjacent to it, including the right to show it. Freelancers sign away their case studies constantly.</p>
+      <div class="anchor"><b>Anchor</b><br>The carve-out to ask for by name: the right to display the work in your portfolio after a stated date. It is almost always granted and almost never requested.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">24</div><div class="bod">
+      <h4>The worse product with better distribution wins, every time</h4>
+      <p class="angle">Distribution as the actual moat, argued from brand cases rather than startup theory. Why founders keep over-investing in the product and under-investing in the path to the person.</p>
+      <div class="anchor"><b>Anchor</b><br>Pick one from your own client work or a category you've watched closely. <span class="gap">[YOUR CASE]</span></div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">25</div><div class="bod">
+      <h4>The advisor deal: taking equity instead of cash</h4>
+      <p class="angle">Standard advisor grants, typical vesting, what's actually being bought (your name on their deck, usually). Four questions before you say yes &mdash; and week one is why you can now ask them.</p>
+      <div class="anchor"><b>Anchor</b><br>Ask: what's the preference stack, what's the last 409A, how much has been raised against it, and what happens to my grant in an acquihire. The founder's face when you ask is itself information.</div>
+      <div class="tagrow"><span class="tag">Pundit</span><span class="tag">Callback to week 1</span></div>
+    </div></div>
+  </div>
+
+  <div class="module">
+    <div class="modhead"><span class="wk">Week 06</span><h3>Compounding</h3><span class="shoot">Shoot day 6</span></div>
+
+    <div class="day"><div class="num">26</div><div class="bod">
+      <h4>Read the cap table before you take the job</h4>
+      <p class="angle">The interview questions nobody asks because they feel rude, and why the reaction to being asked is the most useful data in the whole process. Everything from week one, turned into five sentences you can say in a final round.</p>
+      <div class="anchor"><b>Anchor</b><br>Script the five questions verbatim so the viewer can screenshot and use them. This is the most saveable day in the series.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">27</div><div class="bod">
+      <h4>Startup comp has three levers, and people only pull one</h4>
+      <p class="angle">Cash, equity, and the vesting schedule. The third is the most negotiable and the least negotiated &mdash; an accelerated or shortened schedule can be worth more than the raise you asked for and costs the company nothing today.</p>
+      <div class="anchor"><b>Anchor</b><br>Name single-trigger vs double-trigger acceleration and what each one does if the company is acquired in year two.</div>
+      <div class="tagrow"><span class="tag">Pundit</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">28</div><div class="bod">
+      <h4>What &ldquo;the room&rdquo; is and how you get in it</h4>
+      <p class="angle">Rooms are where price gets set before it's announced. How they actually work, why proximity compounds, and the unglamorous mechanics of getting into one &mdash; which is mostly being useful to someone already inside.</p>
+      <div class="anchor"><b>Anchor</b><br>Bi-continental angle: the rooms in Delhi and the rooms in New York run on different currencies. Only you can make this one.</div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">29</div><div class="bod">
+      <h4>Money that isn't money</h4>
+      <p class="angle">Access, proximity, information, optionality. The four non-cash forms of compensation people accept without pricing, and when each is genuinely worth more than the fee &mdash; plus the tell that you're being paid in exposure with extra steps.</p>
+      <div class="anchor"><b>Anchor</b><br>Maggie Sellers' whole model is proximity as product. Name it as the framework it is, credit it, move on.</div>
+      <div class="tagrow"><span class="tag">Cultural observation</span></div>
+    </div></div>
+
+    <div class="day"><div class="num">30</div><div class="bod">
+      <h4>The things I got wrong about money in my twenties</h4>
+      <p class="angle">Capstone. Personal realization register &mdash; the only other day besides day one that runs warm. What you'd tell yourself at 25, given all thirty days. Shrug close. No summary of the series, no &ldquo;and that's a wrap&rdquo;.</p>
+      <div class="anchor"><b>Anchor</b><br>Must be real and specific or the whole series lands as performance. Two or three actual things, named. <span class="gap">[YOUR MATERIAL]</span></div>
+      <div class="tagrow"><span class="tag">Personal realization</span><span class="tag">Shrug close</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">Sample scripts</div>
+    <h2>Three days, drafted</h2>
+  </div>
+  <p class="lede">One from each register so you can hear the range. Erika pass run on all three. Bracketed pink is where I don't have your material and won't invent it.</p>
+
+  <div class="script">
+    <div class="head"><span class="d">Day 01</span><h4>&ldquo;I have equity&rdquo; is four words hiding four variables</h4><span class="len">~48s &middot; personal realization</span></div>
+    <div class="spoken">
+      <p>Okay so I was listening to Hot Smart Rich and Maggie and Courtney got onto Canva employees and equity &mdash; and Canva had just run this thing where staff could sell up to three million dollars of their shares. At sixteen hundred and forty-six dollars a share. Forty-two billion valuation, Fidelity and JP Morgan on the other side of it, oversubscribed.</p>
+      <p style="margin-top:1em">And I'm listening to this like &mdash; I know every one of those words separately and I could not tell you what actually lands in that person's bank account. Which is genuinely insane because I do this for a living. Like I sit in rooms where a version of this decides whether somebody's five years was worth anything. <span class="gap">[ONE REAL THING YOU'VE WATCHED HAPPEN]</span></p>
+      <p style="margin-top:1em">So I'm doing thirty days of it. One thing a day. What you actually own, what a valuation actually is, how brand deals actually get paid, how to price yourself, and the stuff that turns a job into an asset. It's an MBA for hot girls and I'm also taking it.</p>
+    </div>
+    <dl class="foot">
+      <div><dt>Text on screen</dt><dd>$1,646.14</dd></div>
+      <div><dt>Caption</dt><dd>day 1 of 30. the math nobody shows you.</dd></div>
+      <div><dt>Production</dt><dd>Talking head. The number on screen from the second sentence, held.</dd></div>
+      <div><dt>Moves</dt><dd>Pre-thought open, proximity not credential, self-catching beat, the clause that costs her something in the last line.</dd></div>
+    </dl>
+  </div>
+
+  <div class="script">
+    <div class="head"><span class="d">Day 05</span><h4>The line that decides whether you get anything</h4><span class="len">~52s &middot; pundit</span></div>
+    <div class="spoken">
+      <p>There's a line in almost every investment document that decides whether you get anything, and almost nobody reading an offer letter has read it. Liquidation preference. Investors get their money back before anyone else sees a dollar.</p>
+      <p style="margin-top:1em">So &mdash; company raises thirty million over its life, sells for thirty-five, which by any normal reading is a good outcome. You sold a company. Investors take thirty. Five is left for everyone who worked there. And if the preference is participating, or two-x &mdash; which happens when you raise in a bad market &mdash; investors take sixty before anybody else gets anything, and there is no sale price at which you get paid.</p>
+      <p style="margin-top:1em">So when you read that a company sold for two hundred million and the team got nothing, nobody did anything wrong. It was in the document the whole time.</p>
+      <p style="margin-top:1em">Ask what the preference stack is before you take the job. They'll tell you. Nobody ever asks.</p>
+    </div>
+    <dl class="foot">
+      <div><dt>Text on screen</dt><dd>sold for $35m &middot; team got $5m</dd></div>
+      <div><dt>Caption</dt><dd>day 5. the clause on page nine.</dd></div>
+      <div><dt>Production</dt><dd>Green screen, numbers appearing as you say them. The $30m and $5m need to be visible simultaneously.</dd></div>
+      <div><dt>Moves</dt><dd>Mid-thought open, cold throughout, no self-roast, principle close on a dry landing.</dd></div>
+    </dl>
+  </div>
+
+  <div class="script">
+    <div class="head"><span class="d">Day 13</span><h4>Usage rights are the most underpriced line in the contract</h4><span class="len">~46s &middot; pundit</span></div>
+    <div class="spoken">
+      <p>Can we talk about usage rights, because it's the most underpriced line in every creator contract and I've been on the side of the table that benefits from that.</p>
+      <p style="margin-top:1em">When a brand pays for a post, they're paying for the post. Organic, your channel, your people. The moment they run it as an ad, or put it on their page, or whitelist it through your handle so it looks like you but they're paying to push it &mdash; that's a different product. You made the asset, they're buying media against it.</p>
+      <p style="margin-top:1em">And the number isn't &ldquo;plus twenty percent,&rdquo; it's tied to term, territory and spend. Six weeks of paid social in one market is not perpetuity, all channels, worldwide &mdash; which, I promise you, is sitting in a lot of these contracts.</p>
+      <p style="margin-top:1em">Look for the word perpetuity. If it's in there and your rate didn't move, you sold the whole thing for the price of a post.</p>
+    </div>
+    <dl class="foot">
+      <div><dt>Text on screen</dt><dd>perpetuity, all channels, worldwide</dd></div>
+      <div><dt>Caption</dt><dd>day 13. search your contract for one word.</dd></div>
+      <div><dt>Production</dt><dd>Talking head. Consider holding up a redacted contract page &mdash; the physical object does work here.</dd></div>
+      <div><dt>Moves</dt><dd>Can-we-talk open, the admission in the first sentence (you've been on the buying side), principle close.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">Production</div>
+    <h2>Six shoot days, not thirty</h2>
+  </div>
+  <div class="prod">
+    <div class="pcard">
+      <h4>Batch by module</h4>
+      <p>Same discipline as your macro-trends series: one outfit, one setup, one sitting per module. Five scripts per shoot. The weekly visual change becomes the series' structure &mdash; viewers learn that a new look means a new subject.</p>
+    </div>
+    <div class="pcard">
+      <h4>Write in blocks of five</h4>
+      <p>Scripts for a module get written together so the arc within the week actually holds. Week one has to end on day five landing hardest &mdash; that's the one that gets sent to a group chat.</p>
+    </div>
+    <div class="pcard">
+      <h4>Keep one day loose per week</h4>
+      <p>The series runs six weeks. Something will happen in the news that belongs in it. Hold day 4 of each module as swappable rather than pretending the plan survives contact.</p>
+    </div>
+    <div class="pcard">
+      <h4>Where it lives after</h4>
+      <ul>
+        <li>Vertical video is the primary surface</li>
+        <li>Weeks 1&ndash;2 make a single Substack piece on equity</li>
+        <li>Weeks 3&ndash;4 are the sales argument for the consulting practice &mdash; don't say so on camera</li>
+        <li>Day 26's five questions are the one genuinely screenshot-shaped asset</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div class="eyebrow">Open</div>
+    <h2>What I don't have</h2>
+  </div>
+  <dl class="gaps">
+    <div class="gap-row"><dt>The partnerships research</dt><dd>The creator-partnerships material you pulled together for the partnerships director role is in a different conversation and isn't in this one. Week 3 is built from general practice knowledge &mdash; paste that research in and it gets a lot sharper, and probably earns a sixth day.</dd></div>
+    <div class="gap-row"><dt>Rad School of Growth</dt><dd>I've assumed it's your parent brand and that THE MATH would sit under it as a first term. I don't have its contents, so nothing here draws on it. If it's a course, a newsletter or a doc, send it and I'll fold the existing frameworks into weeks 4 and 5 rather than rebuilding them.</dd></div>
+    <div class="gap-row"><dt>Your own examples</dt><dd>Four days are marked in pink because they need something real that happened to you &mdash; days 15, 18, 24 and 30. I'm not inventing those. Day 30 in particular fails completely if it isn't true.</dd></div>
+    <div class="gap-row"><dt>The podcast episode</dt><dd>I found a Hot Smart Rich segment listed as &ldquo;Canva Employees and Building Equity&rdquo; but I haven't heard it. The Canva figures here are from the August 2025 Bloomberg reporting on the tender, not from the episode &mdash; worth a re-listen before you credit anything specific to them.</dd></div>
+    <div class="gap-row"><dt>Voice guide</dt><dd>Only the top-level rad-voice-guide file synced to this session &mdash; the voice-os and correspondence references weren't there. I wrote the scripts against your TikTok voice files, which cover spoken register fully. Worth a re-sync before the next drafting session.</dd></div>
+  </dl>
+</section>
+
+</div>
