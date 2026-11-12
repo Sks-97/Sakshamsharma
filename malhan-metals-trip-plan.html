@@ -1,0 +1,673 @@
+<title>Malhan Metals Maharashtra Route Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: single reading column (max 1080px) with a sticky section index; tables scroll inside their own boxes. Copper accent, verdigris secondary. */
+:root{
+  --bg:#f7f5f2; --surface:#ffffff; --fg:#1d1a17; --muted:#6b635b; --line:#e4ddd5;
+  --copper:#a8542a; --copper-soft:#f3e3d8; --verd:#2f7d72; --verd-soft:#dcefeb;
+  --ok:#2e7d32; --ok-soft:#e3f2e4; --warn:#9a6700; --warn-soft:#fbf0d5; --bad:#b3261e; --bad-soft:#fbe4e2;
+  --d1:#a8542a; --d2:#2f7d72; --d3:#5b4fb3; --d4:#b07d12; --d5:#c2185b;
+  --f-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16130f; --surface:#1f1b17; --fg:#ede7e0; --muted:#a69c91; --line:#36302a;
+  --copper:#e08a5c; --copper-soft:#3a2519; --verd:#5cc0b1; --verd-soft:#173430;
+  --ok:#7bc77f; --ok-soft:#1c3320; --warn:#e3b341; --warn-soft:#3a2f12; --bad:#f2827a; --bad-soft:#3d1c1a;
+  --d1:#e08a5c; --d2:#5cc0b1; --d3:#9d93f0; --d4:#e3b341; --d5:#f06292; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16130f; --surface:#1f1b17; --fg:#ede7e0; --muted:#a69c91; --line:#36302a;
+  --copper:#e08a5c; --copper-soft:#3a2519; --verd:#5cc0b1; --verd-soft:#173430;
+  --ok:#7bc77f; --ok-soft:#1c3320; --warn:#e3b341; --warn-soft:#3a2f12; --bad:#f2827a; --bad-soft:#3d1c1a;
+  --d1:#e08a5c; --d2:#5cc0b1; --d3:#9d93f0; --d4:#e3b341; --d5:#f06292; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.4vw,42px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:24px;font-weight:700;margin-bottom:12px}
+h3{font-size:17px;font-weight:700;margin:22px 0 8px}
+p{margin:0 0 12px;max-width:72ch}
+a{color:var(--copper)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:17px;color:var(--muted);max-width:68ch;margin-top:10px}
+header.top{display:grid;gap:8px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin:0 0 8px;padding-block:8px;overflow-x:auto;white-space:nowrap}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav.toc a{display:inline-block;font-size:13px;padding:4px 10px;margin-right:4px;border-radius:999px;color:var(--fg);text-decoration:none;border:1px solid var(--line);background:var(--surface)}
+nav.toc a:hover{border-color:var(--copper)}
+section{padding-block:30px;border-bottom:1px solid var(--line);scroll-margin-top:56px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.card h3{margin-top:0}
+.stat{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--copper);font-variant-numeric:tabular-nums;line-height:1.1}
+.stat small{font-size:14px;color:var(--muted);font-weight:500}
+.verdict{background:var(--copper-soft);border:1px solid var(--copper);border-radius:10px;padding:18px}
+.verdict p:last-child{margin-bottom:0}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:10px 0 16px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+th,td{text-align:left;vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mono{font-family:var(--f-mono);font-size:12.5px}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.03em;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.v-ok{background:var(--ok-soft);color:var(--ok)}
+.v-part{background:var(--warn-soft);color:var(--warn)}
+.v-no{background:var(--bad-soft);color:var(--bad)}
+.note{font-size:13px;color:var(--muted)}
+.flag{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:14px}
+.flag.red{border-color:var(--bad);background:var(--bad-soft)}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:16px 0;overflow:hidden}
+.dayhead{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:14px 16px;border-bottom:1px solid var(--line)}
+.dayhead h3{margin:0}
+.dayhead .meta{font-size:13px;color:var(--muted)}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:grid;grid-template-columns:112px 1fr;gap:12px;padding:9px 16px;border-bottom:1px dashed var(--line)}
+.timeline li:last-child{border-bottom:0}
+.timeline .t{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px}
+.timeline .m{min-width:0}
+.timeline li.meet .m strong{color:var(--fg)}
+.timeline li.meet{background:color-mix(in srgb,var(--copper-soft) 45%,transparent)}
+.timeline li.drive .m{color:var(--muted);font-size:14px}
+.timeline li.opt{background:color-mix(in srgb,var(--warn-soft) 60%,transparent)}
+.dayfoot{padding:10px 16px;font-size:13px;display:flex;flex-wrap:wrap;gap:8px 18px;border-top:1px solid var(--line);background:var(--bg)}
+.mapbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0}
+.mapbox svg{width:100%;height:auto;display:block}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:10px}
+.seg button{font:inherit;font-size:13px;padding:6px 14px;border:0;background:var(--surface);color:var(--fg);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--copper);color:var(--bg)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin-top:8px}
+ul.tight{margin:6px 0 12px;padding-left:20px}
+ul.tight li{margin:3px 0}
+.check{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--copper)}
+.src{font-size:13px;columns:2 300px;column-gap:28px}
+.src li{break-inside:avoid;margin:3px 0}
+@media (max-width:560px){.timeline li{grid-template-columns:1fr;gap:2px}.stat{font-size:26px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Malhan Metals LLP · Business development trip · Delhi → Mumbai → Pune → Delhi</div>
+  <h1>Maharashtra customer route plan</h1>
+  <p class="lede">18 earthing-electrode makers and traders in Mumbai and Pune, grouped into 7 driving clusters, with a 3-day and a 5-day itinerary, hotels, flights and a budget. Prepared 12 Nov 2026. Travel dates are not fixed yet, so all fares and hotel rates are recent ranges to re-check on booking.</p>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#summary">1 Summary</a><a href="#customers">2 Customers</a><a href="#mumbai">3 Mumbai clusters</a><a href="#pune">4 Pune clusters</a><a href="#hotels">5 Hotels</a><a href="#plan3">6 3-day plan</a><a href="#plan5">7 5-day plan</a><a href="#maps">8 Route maps</a><a href="#travel">9 Flights &amp; transfers</a><a href="#budget">10 Budget</a><a href="#strategy">Meeting strategy</a><a href="#final">11 Final call</a><a href="#sources">Sources</a>
+</nav>
+
+<!-- 1 -->
+<section id="summary">
+  <div class="eyebrow">Section 1</div>
+  <h2>Executive summary</h2>
+  <div class="grid g3" style="margin:14px 0">
+    <div class="card"><div class="eyebrow">Option A · 3 days, 2 nights</div><div class="stat">16 <small>of 18 customers</small></div><p class="note" style="margin:6px 0 0">+1 optional evening stop. ≈ ₹48k–76k. Day 2 has about 7 hours in the car.</p></div>
+    <div class="card"><div class="eyebrow">Option B · 5 days, 4 nights</div><div class="stat">18 <small>of 18 customers</small></div><p class="note" style="margin:6px 0 0">Time for walk-ins at Lohar Chawl and an optional Murbad factory visit. ≈ ₹70k–1.08 lakh.</p></div>
+    <div class="card"><div class="eyebrow">Recommended</div><div class="stat" style="color:var(--verd)">Option B</div><p class="note" style="margin:6px 0 0">Fly into Mumbai, end in Pune, fly home from Pune. Keep one cab and driver for the Mumbai → Pune transfer.</p></div>
+  </div>
+  <h3>The shape of the trip</h3>
+  <ul class="tight">
+    <li><strong>Fly into Mumbai (BOM) and out of Pune (PNQ).</strong> Open-jaw tickets avoid driving back to Mumbai, which would cost 3–4 hours.</li>
+    <li><strong>One Mumbai hotel in Andheri East (airport / Saki Naka belt).</strong> SafeOne is 2–3 km away, Kalina is 7 km, the western highway goes north to Borivali and Vasai, and the airport is next door.</li>
+    <li><strong>Lohar Chawl is the jackpot.</strong> Four customers (Lath warehouse, Maya, Ramesh, Hari Om) are within a 5–10 minute walk of each other in the Kalbadevi wholesale electrical market. Give it a full afternoon and walk it on foot.</li>
+    <li><strong>Leave Mumbai through Dombivli.</strong> DBA Earthing (Nilje / Palava, Kalyan–Shil Road) sits on the way to the Taloja → Expressway route to Pune, so you visit it on the transfer day without doubling back.</li>
+    <li><strong>Pune splits into a south loop and a north pair.</strong> Six customers sit in a 10 km loop (Sadashiv Peth → Dhankawadi → Katraj → Vadgaon Bk → Kirkatwadi → Karve Nagar). Akurdi and Alandi are 25–30 km north, but Alandi is 20 km from Pune airport, so it works as the last stop before your flight.</li>
+    <li><strong>Before you book anything:</strong> four addresses need a phone call (Akshay, Voltterra, Fast Earthing, Veraizen), and one identity is doubtful (Global Tech). See section 2.</li>
+  </ul>
+  <div class="flag"><strong>About the times and distances:</strong> I could not run a live routing engine from here, so drive times are estimates based on the road route between localities, with ranges for traffic. Every day below has a Google Maps link that opens the exact multi-stop route. Open it the evening before to see live traffic.</div>
+</section>
+
+<!-- 2 -->
+<section id="customers">
+  <div class="eyebrow">Section 2</div>
+  <h2>Customer address database</h2>
+  <p>Each address was checked against IndiaMART, Justdial, TradeIndia, company websites and GST records where available. <span class="pill v-ok">VERIFIED</span> means at least one independent listing matches your address. <span class="pill v-part">CHECK</span> means listings conflict, so call to confirm the meeting address. <span class="pill v-no">UNVERIFIED</span> means I could not confirm the business identity. Phone numbers are shown only where a listing published them; IndiaMART and Justdial numbers are often forwarding numbers.</p>
+
+  <h3>Mumbai region (10)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Company</th><th>Best meeting address</th><th>Status &amp; notes</th><th>Map</th></tr></thead>
+    <tbody>
+    <tr><td>M1</td><td><strong>Veraizen Earthing Pvt Ltd</strong><br><span class="note">Maker of copper-bonded rods, GI electrodes, clamps</span></td><td>Gala 1 &amp; 2, Heena Industrial Estate, Naikpada, Waliv, Vasai East 401208</td><td><span class="pill v-part">CHECK</span> TradeIndia and Aajjo list Heena Ind. Estate. IndiaMART lists Unit 4, Bldg 2, Rajprabha Mohan Ind. Estate, Naikpada, Waliv. Both are in Waliv, a few minutes apart. IndiaMART names Sharup Jain as CEO.</td><td><a data-q="Heena Industrial Estate, Naikpada, Waliv, Vasai East 401208">Open</a></td></tr>
+    <tr><td>M2</td><td><strong>Safeone Earthing LLP</strong><br><span class="note">Chemical earthing electrodes, earth-pit chambers, lightning arresters</span></td><td>Opp. AH Masjid, Khairani Road, Saki Naka, Andheri East 400072</td><td><span class="pill v-ok">VERIFIED</span> Justdial matches. IndiaMART shows an office in Mohili Village (same area). GST 27AEOFS7608Q1ZZ, LLP registered Jan 2022. Justdial number 08123196617.</td><td><a data-q="Safeone Earthing LLP, Khairani Road, Saki Naka, Andheri East, Mumbai 400072">Open</a></td></tr>
+    <tr><td>M3</td><td><strong>Lath Industries</strong> (brand "LATH")<br><span class="note">Copper-bonded rod manufacturer</span></td><td><strong>City:</strong> Bldg 9/13, Ground Floor, Ratanshi Chapsi Bldg, Picket Cross Road, Lohar Chawl 400002<br><strong>Factory:</strong> Plot J-34, Murbad MIDC, Kudavali, Murbad 421401</td><td><span class="pill v-ok">VERIFIED</span> Justdial (city, 07490051304, open till 8 pm) and IndiaMART (factory, director Chetan Lath, GST 27ABWPL3488N1ZJ). Meet in the city. Murbad is about 80 km from Andheri, so it is optional in Option B only.</td><td><a data-q="Lath Industries, Picket Cross Road, Lohar Chawl, Mumbai 400002">City</a> · <a data-q="Plot J-34, Murbad MIDC, Kudavali, Murbad 421401">Factory</a></td></tr>
+    <tr><td>M4</td><td><strong>Maya Earthing Industries</strong></td><td>Ground Floor, 3/5 Takwadi, near Round Building, Kalbadevi Road 400002</td><td><span class="pill v-part">CHECK</span> IndiaMART lists Takwadi, not "27 Picket Road". It is the same lane cluster in Lohar Chawl, a short walk either way. Confirm the shop number on the phone.</td><td><a data-q="Takwadi, Kalbadevi Road, Lohar Chawl, Mumbai 400002">Open</a></td></tr>
+    <tr><td>M5</td><td><strong>Aryan Enterprise</strong></td><td>B-405, Yashwant Shopping Centre, Carter Road No. 7, Borivali East 400066</td><td><span class="pill v-ok">VERIFIED</span> IndiaMART "Aryan Enterprise": earthing maker and trader, est. 2017. The name is very common, so confirm it is the same firm you have been in touch with.</td><td><a data-q="Yashwant Shopping Centre, Carter Road No 7, Borivali East, Mumbai 400066">Open</a></td></tr>
+    <tr><td>M6</td><td><strong>DBA Earthing</strong><br><span class="note">dbaearthingwale.com</span></td><td>Shop C-4, Ground Floor, Shanti Garden CHS, Kalyan–Shil Road, near Lodha Heaven, Nilje, Dombivli East 421204</td><td><span class="pill v-part">CHECK</span> The Aajjo listing gives Nilje, just outside Palava City. Website: +91 91517 61641, Mon–Sat 10:00–19:00. A Palava "Casa Rio" address appears in D&amp;B but is not tied to DBA by name.</td><td><a data-q="Shanti Garden CHS, Kalyan Shil Road, Nilje, Dombivli East 421204">Open</a></td></tr>
+    <tr><td>M7</td><td><strong>Kihi Enterprises</strong><br><span class="note">kihienterprises.in</span></td><td>Garage-1, Ram Niwas, Rokadia Lane, Pai Nagar (near Ganjawala Apt), Borivali West 400092</td><td><span class="pill v-ok">VERIFIED</span> Justdial and the company website match your corporate office. Sole proprietorship, est. 2020. The Shree Rasraj Towers registered office was not found online, so meet at the corporate office.</td><td><a data-q="Ram Niwas, Pai Nagar, Borivali West, Mumbai 400092">Open</a></td></tr>
+    <tr><td>M8</td><td><strong>Cabana Solutions</strong></td><td>313/15, CST Road, near Bharat Co-op Bank &amp; Mumbai University, Vidyanagari, Kalina, Santacruz East 400098</td><td><span class="pill v-ok">VERIFIED</span> Justdial and IndiaMART match. Est. 2007, GST 27AYFPS3280B1ZH. IndiaMART names Misbahul Islam Siddiqui as head. Listed number 08045795951.</td><td><a data-q="313/15 CST Road, Kalina, Santacruz East, Mumbai 400098">Open</a></td></tr>
+    <tr><td>M9</td><td><strong>Ramesh Earthing Corporation</strong></td><td>Shop 26, Ground Floor, Devkaran Mansion, Mangaldas Road, Kalbadevi 400002</td><td><span class="pill v-ok">VERIFIED</span> Justdial matches. GST 27BBXPB4491D1ZF (proprietorship, 2017) is registered at Sai Bhuvan, Shamaldas Chawl, Kalbadevi. <strong>Not the same firm</strong> as "Ramesh Trading Corporation" near Lohar Chawl.</td><td><a data-q="Devkaran Mansion, Mangaldas Road, Kalbadevi, Mumbai 400002">Open</a></td></tr>
+    <tr><td>M10</td><td><strong>Hari Om Earthing (India)</strong></td><td>Plot 10, Ground Floor, 20 Diamond Building, Pathakwadi, Lohar Chawl 400002</td><td><span class="pill v-ok">VERIFIED</span> TradeIndia matches (one source). Proprietor shown as "Mr. Paras Bhai", which fits your contact Parasmal Bishnoi. Est. 2011.</td><td><a data-q="Diamond Building, Pathakwadi, Lohar Chawl, Mumbai 400002">Open</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Pune region (8)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Company</th><th>Best meeting address</th><th>Status &amp; notes</th><th>Map</th></tr></thead>
+    <tbody>
+    <tr><td>P1</td><td><strong>Voltterra Industries Pvt Ltd</strong></td><td>Sr. No. 8/9/1, near Abhinav College, Vadgaon Budruk 411041</td><td><span class="pill v-part">CHECK</span> IndiaMART lists Vadgaon Budruk. Justdial lists Jambhulwadi Road, near Pragati Hotel, 411046. Both are south Pune, about 5 km apart, so the route still works either way.</td><td><a data-q="Abhinav College, Vadgaon Budruk, Pune 411041">Vadgaon</a> · <a data-q="Jambhulwadi Road, near Pragati Hotel, Pune 411046">Jambhulwadi</a></td></tr>
+    <tr><td>P2</td><td><strong>Yash Earthing Solutions Pvt Ltd</strong></td><td>Shop 2A, Rajdhani Apartment, Dhankawadi, Satara Road (near Shankar Maharaj Math) 411037</td><td><span class="pill v-ok">VERIFIED</span> IndiaMART and ExportersIndia match. Founder Jaikumar Belsare, in business since 2002. GST 27AABCY2449P1ZP.</td><td><a data-q="Rajdhani Apartment, Dhankawadi, Satara Road, Pune 411037">Open</a></td></tr>
+    <tr><td>P3</td><td><strong>Fast Earthing Enterprises</strong><br><span class="note">fastearthing.in</span></td><td>202, Balaji Enclave, Rajas Society, Katraj 411046<br><span class="note">Website office: Sr. No. 34/12, Mauli Niwas, Mohan Nagar, Dhankawadi 411043. Factory: Karandi, Tal. Bhor 412213</span></td><td><span class="pill v-part">CHECK</span> Three addresses across sources, est. 2017. Katraj and Dhankawadi are 3 km apart, so either fits. Bhor is about 35 km south, so skip the factory. <strong>Not the same firm</strong> as "Fast Electrode" in Sadashiv Peth.</td><td><a data-q="Balaji Enclave, Rajas Society, Katraj, Pune 411046">Katraj</a> · <a data-q="Mohan Nagar, Dhankawadi, Pune 411043">Dhankawadi</a></td></tr>
+    <tr><td>P4</td><td><strong>Trimurti Earthing Solution</strong></td><td>Sr. No. 99, Rasal Shed House, Kalibhint Road, Choviswadi, Alandi 412105</td><td><span class="pill v-ok">VERIFIED</span> IndiaMART matches. CEO Komal Ramesh Pawar, GST 27BYWPP8134P2Z5. A second listing shows Shop 7 near Sai Mandir, Wadmukhwadi.</td><td><a data-q="Kalibhint Road, Choviswadi, Alandi, Pune 412105">Open</a></td></tr>
+    <tr><td>P5</td><td><strong>Shreenath Enterprises</strong></td><td>BR2/27, Upper Ground Floor, B-Wing, Jai Ganesh Vision, Akurdi Chowk 411035</td><td><span class="pill v-part">CHECK</span> TradeIndia matches. IndiaMART lists MIDC Chinchwad 411019, and Justdial also mentions Nighoje. Justdial number 09035273136. GST 27FHHPK6451C1ZC.</td><td><a data-q="Jai Ganesh Vision, Akurdi Chowk, Pune 411035">Open</a></td></tr>
+    <tr><td>P6</td><td><strong>Global Tech Earthing</strong></td><td>4th floor, White House, 1482 Sadashiv Peth, Tilak Road (opp. Tilak Smarak Mandir) 411030</td><td><span class="pill v-no">UNVERIFIED</span> This address belongs to <strong>Global Tech (India) Pvt Ltd</strong>, listed as a dealer of pumps, gearboxes and fire extinguishers (old landline 020-24470085). Its IndiaMART profile mentions earthing work to IS:3043, so it may be the same company. No "Global Tech Earthing" listing exists. Also <strong>not</strong> the same as "Global Earthing", Ambegaon. Call before you schedule.</td><td><a data-q="White House, 1482 Sadashiv Peth, Tilak Road, Pune 411030">Open</a></td></tr>
+    <tr><td>P7</td><td><strong>Amit Earthing Solution</strong></td><td>Flat 102, 1st Floor, Panchawanti Apt, Gat No. 86, Kirkatwadi Village Road 411024</td><td><span class="pill v-ok">VERIFIED</span> IndiaMART and TradeIndia match. Kirkatwadi is next to Nanded Phata. CEO Umesh Shalikram Manvar, est. 2023. Your contact 7020579515 was not cross-checked.</td><td><a data-q="Panchawanti Apartment, Kirkatwadi, Pune 411024">Open</a></td></tr>
+    <tr><td>P8</td><td><strong>Akshay Earthing Enterprises</strong><br><span class="note">akshayearthing.com</span></td><td><strong>Ask first.</strong> Website: Shop 2, Avani Complex, Sr. No. 28/15, near Chintamani Dnyanpeeth School, Ambegaon Pathar 411046<br><span class="note">Also listed: Shop 8, Laxmi Narayan Park, Bhalekar Wasti, Karve Nagar 411052 (ExportersIndia, Mr Akshay Damekar) and Shivane MIDC (Justdial)</span></td><td><span class="pill v-part">CHECK</span> Three addresses. The company's own website is the most authoritative, so <strong>Ambegaon Pathar is probably the current office</strong>; Shivane MIDC may be a works unit. If it is Ambegaon, the visit moves next to Fast Earthing (3 km). The itineraries show Karve Nagar with this swap noted.</td><td><a data-q="Avani Complex, Ambegaon Pathar, Pune 411046">Ambegaon</a> · <a data-q="Laxmi Narayan Park, Bhalekar Wasti, Karve Nagar, Pune 411052">Karve Nagar</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 3 -->
+<section id="mumbai">
+  <div class="eyebrow">Section 3</div>
+  <h2>Mumbai clusters</h2>
+  <div class="grid g2">
+    <div class="card"><h3>M-A · Andheri East / Kalina</h3><p class="note">SafeOne (Saki Naka) · Cabana (Kalina)</p><p>About 7 km apart, 25–40 min. Both are close to the airport and the hotel, so this is the arrival-day cluster.</p></div>
+    <div class="card"><h3>M-B · Lohar Chawl / Kalbadevi</h3><p class="note">Lath (city office) · Maya · Ramesh · Hari Om</p><p>All within 300–600 m. Park once near Crawford Market and walk. About 20–25 km from Andheri East, 60–100 min depending on traffic. Market shops shut on Sundays.</p></div>
+    <div class="card"><h3>M-C · Borivali / Vasai</h3><p class="note">Kihi (Borivali W) · Aryan (Borivali E) · Veraizen (Vasai E)</p><p>Borivali W to E is 3–4 km. Borivali to Waliv (Vasai E) is about 30 km on NH48, 50–70 min. From Andheri East it is 17 km to Borivali on the Western Express Highway.</p></div>
+    <div class="card"><h3>M-D · Dombivli / Murbad</h3><p class="note">DBA (Nilje) · Lath factory (Murbad, optional)</p><p>DBA is about 40 km from Andheri (1.5–2 h) or 55–65 km from Vasai via Bhiwandi (1h45–2h30). It sits on the Shil Phata → Taloja → Expressway route to Pune. Murbad is a further 45 km (about 1h15).</p></div>
+  </div>
+  <div class="flag red"><strong>Too far to combine:</strong> Lohar Chawl (south) and Vasai (north) are about 60 km and 2–3 hours apart. Never put them on the same day. Lath's Murbad factory does not fit into either itinerary unless you drop a Pune stop; meet Lath at Picket Cross Road instead.</div>
+  <h3>Realistic meeting capacity</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Cluster</th><th class="num">Meetings / day</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Lohar Chawl (walkable)</td><td class="num">4–6</td><td>No driving between stops; 10 minutes on foot. You can add walk-ins at other earthing traders in the same lanes.</td></tr>
+      <tr><td>Andheri / Kalina</td><td class="num">2–3</td><td>Short hops, but Saki Naka and Kalina traffic adds 25–40 minutes per leg.</td></tr>
+      <tr><td>Borivali + Vasai</td><td class="num">3</td><td>One long highway leg to Vasai.</td></tr>
+      <tr><td>Borivali + Vasai + Dombivli → Pune</td><td class="num">4</td><td>Possible only as a sweep with no return. About 245 km and 7 hours of driving.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 4 -->
+<section id="pune">
+  <div class="eyebrow">Section 4</div>
+  <h2>Pune clusters</h2>
+  <div class="grid g2">
+    <div class="card"><h3>P-A · South loop (6)</h3><p class="note">Global Tech (Sadashiv Peth) · Yash (Dhankawadi) · Fast (Katraj) · Voltterra (Vadgaon Bk) · Amit (Kirkatwadi) · Akshay (Karve Nagar or Ambegaon)</p><p>A clockwise loop of about 40 km: south down Satara Road, west along Sinhagad Road, and north to Karve Nagar. Each hop is 4–9 km, 15–35 min.</p></div>
+    <div class="card"><h3>P-B · North (2)</h3><p class="note">Shreenath (Akurdi, PCMC) · Trimurti (Alandi)</p><p>Akurdi is about 22 km from Karve Nagar and 5 km off the Expressway at Ravet. Akurdi to Alandi is about 25 km, 50–70 min. Alandi to Pune airport is about 20 km, 40–60 min, which makes it a good last stop.</p></div>
+  </div>
+  <div class="flag"><strong>Pune timing:</strong> many shops in the old peths (Sadashiv Peth, Budhwar Peth) close for a long afternoon break, so the Sadashiv Peth visit is always scheduled in the morning. Ask every Pune customer which weekday they are closed.</div>
+</section>
+
+<!-- 5 -->
+<section id="hotels">
+  <div class="eyebrow">Section 5</div>
+  <h2>Hotel recommendations</h2>
+  <p>Rates below are recent aggregator snapshots, not quotes for your dates. Since the September 2025 GST change, rooms up to ₹7,500 a night carry 5% GST and rooms above that carry 18%, so keep the room rate at or below ₹7,500. Breakfast depends on the rate plan; book the "with breakfast" rate, which usually costs ₹500–900 more.</p>
+
+  <h3>Mumbai: stay in Andheri East (airport / Marol / Saki Naka)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Hotel</th><th>Class</th><th>Location</th><th>Recent rate</th><th>Guest rating</th><th>Distance to clusters</th><th>Map</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hotel Kohinoor Continental</strong> <span class="pill v-ok">PICK</span></td><td>4★</td><td>Andheri–Kurla Road, Andheri East</td><td class="num">₹4,650–6,350<br><span class="note">recent bookings on Kayak</span></td><td>7.4/10 (538, Kayak) · 7.6–7.8 (Expedia)</td><td>SafeOne 2–3 km · Kalina 7 km · Borivali 18 km · Lohar Chawl 24 km</td><td><a data-q="Hotel Kohinoor Continental, Andheri Kurla Road, Andheri East, Mumbai">Open</a></td></tr>
+      <tr><td><strong>Lemon Tree Premier, Mumbai Intl Airport</strong></td><td>4★</td><td>Andheri–Kurla Road, opp. Mittal Ind. Estate; 4-minute walk to Marol Naka metro</td><td class="num">≈ ₹6,500–8,000 on many dates; peaks higher</td><td>9.6 (Expedia snapshot)</td><td>Same as Kohinoor (within 1 km)</td><td><a data-q="Lemon Tree Premier Mumbai International Airport, Andheri East">Open</a></td></tr>
+      <tr><td><strong>Fairfield by Marriott Mumbai Intl Airport</strong></td><td>4★</td><td>Saki Naka, Andheri East</td><td class="num">≈ ₹8,000–8,500; over budget on most dates</td><td>Good (Marriott)</td><td>SafeOne under 1.5 km</td><td><a data-q="Fairfield by Marriott Mumbai International Airport, Saki Naka">Open</a></td></tr>
+      <tr><td><strong>ibis Mumbai Airport</strong> (budget fallback)</td><td>3★</td><td>Plot F-77, Vile Parle East</td><td class="num">from ₹4,180</td><td>6.4/10 (1,625, Kayak)</td><td>Kalina 5 km · SafeOne 5 km</td><td><a data-q="ibis Mumbai Airport, Vile Parle East">Open</a></td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Why Kohinoor Continental:</strong> it is the best-rated 4-star that reliably comes in under ₹7,500, and it is the closest to your first customer. Take Lemon Tree Premier if it is within budget on your dates.</p>
+
+  <h3>Pune: stay in Deccan / Shivajinagar</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Hotel</th><th>Class</th><th>Location</th><th>Recent rate</th><th>Guest rating</th><th>Distance to clusters</th><th>Map</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ramee Grand Hotel &amp; Spa</strong> <span class="pill v-ok">PICK</span></td><td>4★</td><td>Apte Road, Deccan Gymkhana</td><td class="num">≈ ₹5,000 (Orbitz snapshot $60)</td><td>8.2/10 (135, Hotels.com)</td><td>Sadashiv Peth 2 km · Karve Nagar 5 km · Dhankawadi 8 km · Akurdi 20 km</td><td><a data-q="Ramee Grand Hotel and Spa, Apte Road, Deccan, Pune">Open</a></td></tr>
+      <tr><td><strong>Lemon Tree Premier City Center</strong></td><td>4★</td><td>Central Pune, 3.5 km from Swargate</td><td class="num">≈ ₹4,300–4,900 incl. tax (snapshot)</td><td>9.0/10 (51, Hotels.com)</td><td>Satara Road side; quick to Dhankawadi and Katraj</td><td><a data-q="Lemon Tree Premier City Center Pune">Open</a></td></tr>
+      <tr><td><strong>The Pride Hotel</strong></td><td>4★ / 4.5★ listings</td><td>5 University Road, Shivajinagar</td><td class="num">₹6,030 + ₹650 tax (Cleartrip, 2024)</td><td>6.5 (459, Kayak) · 8.0 (Trip.com)</td><td>Sadashiv Peth 3 km · Akurdi 17 km</td><td><a data-q="The Pride Hotel, University Road, Shivajinagar, Pune">Open</a></td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Why Ramee Grand:</strong> Deccan is the hinge between the south loop and the road north to Akurdi, and Sadashiv Peth (your first Pune stop) is 2 km away. Lemon Tree Premier City Center is the better value if you end up with more Satara Road meetings.</p>
+</section>
+
+<!-- 6 -->
+<section id="plan3">
+  <div class="eyebrow">Section 6 · Option A</div>
+  <h2>3-day itinerary (2 nights)</h2>
+  <p>Nights: 1 × Mumbai (Andheri East), 1 × Pune (Deccan). Meetings are planned at 45 minutes. Choose Tuesday–Thursday so the Lohar Chawl day is not a Sunday.</p>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d1)"></span>Day 1 · Andheri, Kalina, Lohar Chawl</h3><span class="meta">6 meetings · ≈ 55 km driving · Hotel: Kohinoor Continental, Andheri East</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">06:00–08:15</span><span class="m">Flight DEL → BOM (book a 06:00–07:00 departure). Driver meets you at arrivals at about 08:45.</span></li>
+      <li class="drive"><span class="t">09:15</span><span class="m">Drop bags at the hotel (early check-in is not guaranteed; leave them at the desk). 3 km, 15 min.</span></li>
+      <li class="meet"><span class="t">10:30–11:15</span><span class="m"><strong>M2 Safeone Earthing</strong>, Khairani Road, Saki Naka. 2–3 km from hotel, 10–15 min.</span></li>
+      <li class="drive"><span class="t">11:15–11:55</span><span class="m">→ Kalina, ≈ 7 km, 25–40 min.</span></li>
+      <li class="meet"><span class="t">12:00–12:45</span><span class="m"><strong>M8 Cabana Solutions</strong>, 313/15 CST Road, Kalina.</span></li>
+      <li><span class="t">12:45–13:30</span><span class="m">Lunch near Kalina / BKC.</span></li>
+      <li class="drive"><span class="t">13:30–14:40</span><span class="m">→ Lohar Chawl, ≈ 20 km, 60–75 min (Sea Link and Coastal Road, or Eastern Freeway). Driver parks near Crawford Market; walk from here.</span></li>
+      <li class="meet"><span class="t">14:45–15:30</span><span class="m"><strong>M3 Lath Industries</strong>, Ratanshi Chapsi Bldg, Picket Cross Road.</span></li>
+      <li class="meet"><span class="t">15:40–16:25</span><span class="m"><strong>M4 Maya Earthing</strong>, 3/5 Takwadi, Kalbadevi Road. 5 min walk.</span></li>
+      <li class="meet"><span class="t">16:35–17:20</span><span class="m"><strong>M9 Ramesh Earthing</strong>, Shop 26, Devkaran Mansion, Mangaldas Road. 5–10 min walk.</span></li>
+      <li class="meet"><span class="t">17:30–18:15</span><span class="m"><strong>M10 Hari Om Earthing</strong>, 20 Diamond Bldg, Pathakwadi. 5 min walk. Ask Parasmal-ji about other traders worth meeting next time.</span></li>
+      <li class="drive"><span class="t">18:30–20:15</span><span class="m">→ Hotel, ≈ 24 km, 75–105 min in evening traffic.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Hotel Kohinoor Continental, Andheri East, Mumbai|Khairani Road, Saki Naka, Andheri East, Mumbai 400072|313/15 CST Road, Kalina, Santacruz East, Mumbai 400098|Picket Cross Road, Lohar Chawl, Mumbai 400002|Hotel Kohinoor Continental, Andheri East, Mumbai">Open Day 1 route in Google Maps</a><span class="note">Cab: 12-hour local hire, sedan</span></div>
+  </div>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d2)"></span>Day 2 · Borivali, Vasai, Dombivli, then Pune</h3><span class="meta">4 meetings (+1 optional) · ≈ 245 km driving · Hotel: Ramee Grand, Deccan, Pune</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">08:45</span><span class="m">Check out, bags in the cab. → Borivali West, ≈ 18 km on the Western Express Highway, 45–60 min.</span></li>
+      <li class="meet"><span class="t">10:00–10:45</span><span class="m"><strong>M7 Kihi Enterprises</strong>, Ram Niwas, Pai Nagar, Borivali W.</span></li>
+      <li class="drive"><span class="t">10:45–11:00</span><span class="m">→ Borivali E, ≈ 3–4 km, 10–20 min.</span></li>
+      <li class="meet"><span class="t">11:00–11:45</span><span class="m"><strong>M5 Aryan Enterprise</strong>, Yashwant Shopping Centre, Carter Road 7.</span></li>
+      <li class="drive"><span class="t">11:45–12:45</span><span class="m">→ Waliv, Vasai E, ≈ 30 km on NH48, 50–70 min.</span></li>
+      <li><span class="t">12:45–13:25</span><span class="m">Lunch at a highway restaurant near Vasai Phata.</span></li>
+      <li class="meet"><span class="t">13:30–14:15</span><span class="m"><strong>M1 Veraizen Earthing</strong>, Heena Ind. Estate, Naikpada. This is a factory, so ask to see the plating line.</span></li>
+      <li class="drive"><span class="t">14:15–16:15</span><span class="m">→ Nilje, Dombivli E, ≈ 55–65 km via Chinchoti–Bhiwandi–Kalyan bypass, 1h45–2h30. This is the riskiest leg; call DBA from the road with an ETA.</span></li>
+      <li class="meet"><span class="t">16:15–17:00</span><span class="m"><strong>M6 DBA Earthing</strong>, Shanti Garden, Kalyan–Shil Road (open till 19:00).</span></li>
+      <li class="drive"><span class="t">17:00–20:15</span><span class="m">→ Pune via Shil Phata–Taloja–Kalamboli–Mumbai–Pune Expressway, ≈ 140 km, 2h45–3h30. Toll on the Expressway is ≈ ₹320–350.</span></li>
+      <li class="opt"><span class="t">≈ 19:30</span><span class="m"><em>Optional:</em> <strong>P5 Shreenath Enterprises</strong>, Akurdi Chowk, 5 km off the Expressway at Ravet. Only if they agree to an evening slot; otherwise go straight to the hotel.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Hotel Kohinoor Continental, Andheri East, Mumbai|Ram Niwas, Pai Nagar, Borivali West, Mumbai 400092|Yashwant Shopping Centre, Carter Road No 7, Borivali East, Mumbai 400066|Heena Industrial Estate, Naikpada, Waliv, Vasai East 401208|Shanti Garden CHS, Kalyan Shil Road, Nilje, Dombivli East 421204|Ramee Grand Hotel, Apte Road, Deccan, Pune">Open Day 2 route in Google Maps</a><span class="note">Cab: Mumbai → Pune outstation one-way</span></div>
+  </div>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d3)"></span>Day 3 · Pune south loop, then fly home</h3><span class="meta">6 meetings · ≈ 60 km driving · Flight from PNQ at 20:00 or later</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">09:15</span><span class="m">Check out. → Tilak Road, 2 km, 10–15 min.</span></li>
+      <li class="meet"><span class="t">09:30–10:15</span><span class="m"><strong>P6 Global Tech</strong>, White House, 1482 Sadashiv Peth. <em>Only if the phone call confirms they buy earthing material.</em> If not, start at Yash at 10:00.</span></li>
+      <li class="drive"><span class="t">10:15–10:45</span><span class="m">→ Dhankawadi, ≈ 6 km, 20–30 min.</span></li>
+      <li class="meet"><span class="t">10:45–11:30</span><span class="m"><strong>P2 Yash Earthing Solutions</strong>, Rajdhani Apt, Satara Road.</span></li>
+      <li class="drive"><span class="t">11:30–11:45</span><span class="m">→ Katraj, ≈ 3–4 km, 15 min.</span></li>
+      <li class="meet"><span class="t">11:45–12:30</span><span class="m"><strong>P3 Fast Earthing Enterprises</strong>, Balaji Enclave, Katraj (or Mohan Nagar, Dhankawadi). <em>If Akshay confirms Ambegaon Pathar, visit Akshay next (3 km) and skip the Karve Nagar stop at the end.</em></span></li>
+      <li><span class="t">12:30–13:15</span><span class="m">Lunch, Katraj / Satara Road.</span></li>
+      <li class="drive"><span class="t">13:15–13:45</span><span class="m">→ Vadgaon Budruk, ≈ 8 km via Narhe, 25–35 min.</span></li>
+      <li class="meet"><span class="t">13:45–14:30</span><span class="m"><strong>P1 Voltterra Industries</strong>, near Abhinav College (or Jambhulwadi Road if confirmed).</span></li>
+      <li class="drive"><span class="t">14:30–15:00</span><span class="m">→ Kirkatwadi, ≈ 6–7 km on Sinhagad Road, 20–30 min.</span></li>
+      <li class="meet"><span class="t">15:00–15:45</span><span class="m"><strong>P7 Amit Earthing Solution</strong>, Panchawanti Apt, Kirkatwadi.</span></li>
+      <li class="drive"><span class="t">15:45–16:15</span><span class="m">→ Karve Nagar, ≈ 8–9 km, 25–35 min.</span></li>
+      <li class="meet"><span class="t">16:15–17:00</span><span class="m"><strong>P8 Akshay Earthing</strong>, Laxmi Narayan Park, Bhalekar Wasti (if this is still their address).</span></li>
+      <li class="drive"><span class="t">17:00–18:20</span><span class="m">→ Pune airport, ≈ 17 km, 60–80 min in evening traffic. Book a flight at 20:00 or later.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Ramee Grand Hotel, Apte Road, Deccan, Pune|White House, 1482 Sadashiv Peth, Tilak Road, Pune 411030|Rajdhani Apartment, Dhankawadi, Satara Road, Pune 411037|Balaji Enclave, Rajas Society, Katraj, Pune 411046|Abhinav College, Vadgaon Budruk, Pune 411041|Panchawanti Apartment, Kirkatwadi, Pune 411024|Laxmi Narayan Park, Bhalekar Wasti, Karve Nagar, Pune 411052|Pune International Airport">Open Day 3 route in Google Maps</a><span class="note">Cab: Pune 8 h / 80 km with airport drop</span></div>
+  </div>
+  <div class="flag"><strong>Not covered in Option A:</strong> P4 Trimurti (Alandi) and, unless the evening slot works, P5 Shreenath (Akurdi). Hold a video call with them. If any Day 3 meeting cancels, swap in Trimurti: Alandi is only about 20 km from the airport.</div>
+</section>
+
+<!-- 7 -->
+<section id="plan5">
+  <div class="eyebrow">Section 7 · Option B</div>
+  <h2>5-day itinerary (4 nights)</h2>
+  <p>Nights: 3 × Mumbai (one hotel, no repacking), 1 × Pune. Covers all 18 customers, with time for walk-ins and a real lunch every day.</p>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d1)"></span>Day 1 · Arrive, Andheri and Kalina</h3><span class="meta">2 meetings · ≈ 25 km · Hotel: Kohinoor Continental</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">07:00–09:15</span><span class="m">Flight DEL → BOM (a later morning flight is fine). Check in or drop bags at about 10:30.</span></li>
+      <li><span class="t">12:30–13:30</span><span class="m">Lunch near the hotel; confirm Day 2 appointments by phone.</span></li>
+      <li class="meet"><span class="t">14:00–14:45</span><span class="m"><strong>M2 Safeone Earthing</strong>, Saki Naka. 2–3 km, 10–15 min.</span></li>
+      <li class="drive"><span class="t">14:45–15:25</span><span class="m">→ Kalina, ≈ 7 km, 25–40 min.</span></li>
+      <li class="meet"><span class="t">15:30–16:15</span><span class="m"><strong>M8 Cabana Solutions</strong>, CST Road, Kalina.</span></li>
+      <li class="drive"><span class="t">16:15–17:00</span><span class="m">→ Hotel, ≈ 8 km. Evening: write up meeting notes and send follow-ups the same night.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Chhatrapati Shivaji Maharaj International Airport Terminal 2|Hotel Kohinoor Continental, Andheri East, Mumbai|Khairani Road, Saki Naka, Andheri East, Mumbai 400072|313/15 CST Road, Kalina, Santacruz East, Mumbai 400098|Hotel Kohinoor Continental, Andheri East, Mumbai">Open Day 1 route</a><span class="note">Cab: 8 h / 80 km sedan</span></div>
+  </div>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d2)"></span>Day 2 · Lohar Chawl on foot</h3><span class="meta">4 meetings + walk-ins · ≈ 50 km · Hotel: Kohinoor Continental</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">10:00–11:20</span><span class="m">→ Lohar Chawl, ≈ 24 km, 60–80 min after the morning peak.</span></li>
+      <li class="meet"><span class="t">11:30–12:15</span><span class="m"><strong>M3 Lath Industries</strong>, Picket Cross Road. Ask about a Murbad factory visit on Day 4.</span></li>
+      <li class="meet"><span class="t">12:30–13:15</span><span class="m"><strong>M4 Maya Earthing</strong>, Takwadi.</span></li>
+      <li><span class="t">13:15–14:15</span><span class="m">Lunch, Kalbadevi.</span></li>
+      <li class="meet"><span class="t">14:30–15:15</span><span class="m"><strong>M9 Ramesh Earthing</strong>, Devkaran Mansion.</span></li>
+      <li class="meet"><span class="t">15:45–16:30</span><span class="m"><strong>M10 Hari Om Earthing</strong>, Diamond Bldg, Pathakwadi.</span></li>
+      <li class="opt"><span class="t">16:30–18:00</span><span class="m"><em>Walk-ins:</em> other earthing traders in the same lanes appeared in directory searches (for example Hemal Trading Co., Picket Road, and Pawan Marketing, Devkaran Mansion Compound). Leave a catalogue and a card.</span></li>
+      <li class="drive"><span class="t">18:00–19:45</span><span class="m">→ Hotel, ≈ 24 km, 75–105 min.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Hotel Kohinoor Continental, Andheri East, Mumbai|Picket Cross Road, Lohar Chawl, Mumbai 400002|Hotel Kohinoor Continental, Andheri East, Mumbai">Open Day 2 route</a><span class="note">Cab: 10-hour local hire (driver waits while you walk)</span></div>
+  </div>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d3)"></span>Day 3 · Borivali and Vasai</h3><span class="meta">3 meetings · ≈ 95 km · Hotel: Kohinoor Continental</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">09:00–10:00</span><span class="m">→ Borivali W, ≈ 18 km, 45–60 min.</span></li>
+      <li class="meet"><span class="t">10:15–11:00</span><span class="m"><strong>M7 Kihi Enterprises</strong>, Pai Nagar.</span></li>
+      <li class="meet"><span class="t">11:30–12:15</span><span class="m"><strong>M5 Aryan Enterprise</strong>, Carter Road 7, Borivali E. 3–4 km.</span></li>
+      <li><span class="t">12:15–13:00</span><span class="m">Lunch, Borivali E.</span></li>
+      <li class="drive"><span class="t">13:00–14:00</span><span class="m">→ Waliv, Vasai E, ≈ 30 km, 50–70 min.</span></li>
+      <li class="meet"><span class="t">14:00–15:15</span><span class="m"><strong>M1 Veraizen Earthing</strong>. Allow 75 minutes for a factory walk-through.</span></li>
+      <li class="drive"><span class="t">15:15–17:00</span><span class="m">→ Hotel, ≈ 45 km, 1h30–1h45. Pack for the transfer day.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Hotel Kohinoor Continental, Andheri East, Mumbai|Ram Niwas, Pai Nagar, Borivali West, Mumbai 400092|Yashwant Shopping Centre, Carter Road No 7, Borivali East, Mumbai 400066|Heena Industrial Estate, Naikpada, Waliv, Vasai East 401208|Hotel Kohinoor Continental, Andheri East, Mumbai">Open Day 3 route</a><span class="note">Cab: 8 h / 80 km + about 15 extra km</span></div>
+  </div>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d4)"></span>Day 4 · Dombivli, Expressway, Pune south-east</h3><span class="meta">4 meetings · ≈ 200 km · Hotel: Ramee Grand, Deccan</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">07:45–09:30</span><span class="m">Check out. → Nilje, Dombivli E, ≈ 40 km via JVLR–Eastern Express Highway–Thane–Shil Phata, 1h30–2h.</span></li>
+      <li class="meet"><span class="t">10:00–10:45</span><span class="m"><strong>M6 DBA Earthing</strong>, Kalyan–Shil Road.</span></li>
+      <li class="opt"><span class="t">(option)</span><span class="m"><em>Lath factory, Murbad MIDC:</em> about 45 km, 1h15 each way from DBA. Only do this if Lath is a top-priority account, and then move the three Pune visits below to Day 5.</span></li>
+      <li class="drive"><span class="t">10:45–13:45</span><span class="m">→ Pune via Taloja–Expressway, ≈ 140 km, 2h45–3h15. Lunch at a food mall on the Expressway.</span></li>
+      <li><span class="t">13:45–14:30</span><span class="m">Check in at Ramee Grand, Deccan.</span></li>
+      <li class="meet"><span class="t">15:00–15:45</span><span class="m"><strong>P6 Global Tech</strong>, Tilak Road. <em>Only if confirmed.</em> Ask whether they observe the afternoon closure; if they do, swap to Yash first.</span></li>
+      <li class="meet"><span class="t">16:15–17:00</span><span class="m"><strong>P2 Yash Earthing</strong>, Dhankawadi. ≈ 6 km, 20–30 min.</span></li>
+      <li class="meet"><span class="t">17:15–18:00</span><span class="m"><strong>P3 Fast Earthing</strong>, Katraj / Dhankawadi. 3–4 km. Add <strong>P8 Akshay</strong> here at 18:15 if they confirm Ambegaon Pathar.</span></li>
+      <li class="drive"><span class="t">18:00–18:45</span><span class="m">→ Hotel, ≈ 9 km.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Hotel Kohinoor Continental, Andheri East, Mumbai|Shanti Garden CHS, Kalyan Shil Road, Nilje, Dombivli East 421204|Ramee Grand Hotel, Apte Road, Deccan, Pune|White House, 1482 Sadashiv Peth, Tilak Road, Pune 411030|Rajdhani Apartment, Dhankawadi, Satara Road, Pune 411037|Balaji Enclave, Rajas Society, Katraj, Pune 411046|Ramee Grand Hotel, Apte Road, Deccan, Pune">Open Day 4 route</a><span class="note">Cab: Mumbai → Pune outstation; same driver all day</span></div>
+  </div>
+
+  <div class="day">
+    <div class="dayhead"><h3><span class="swatch" style="background:var(--d5)"></span>Day 5 · Pune west and north, then fly home</h3><span class="meta">5 meetings · ≈ 90 km · Flight from PNQ at 19:30 or later</span></div>
+    <ul class="timeline">
+      <li class="drive"><span class="t">09:00–09:30</span><span class="m">Check out. → Vadgaon Budruk, ≈ 7 km, 25 min.</span></li>
+      <li class="meet"><span class="t">09:30–10:15</span><span class="m"><strong>P1 Voltterra Industries</strong>.</span></li>
+      <li class="meet"><span class="t">10:40–11:25</span><span class="m"><strong>P7 Amit Earthing Solution</strong>, Kirkatwadi. 6–7 km, 20–30 min.</span></li>
+      <li class="meet"><span class="t">11:55–12:40</span><span class="m"><strong>P8 Akshay Earthing</strong>, Karve Nagar. 8–9 km, 25–35 min. If Akshay was seen on Day 4, take a longer lunch instead.</span></li>
+      <li><span class="t">12:40–13:30</span><span class="m">Lunch, Karve Nagar / Kothrud.</span></li>
+      <li class="drive"><span class="t">13:30–14:30</span><span class="m">→ Akurdi, ≈ 22 km via Chandni Chowk and the Mumbai–Bengaluru bypass, 50–70 min.</span></li>
+      <li class="meet"><span class="t">14:30–15:15</span><span class="m"><strong>P5 Shreenath Enterprises</strong>, Jai Ganesh Vision, Akurdi Chowk.</span></li>
+      <li class="drive"><span class="t">15:15–16:15</span><span class="m">→ Alandi, ≈ 25 km, 50–70 min.</span></li>
+      <li class="meet"><span class="t">16:15–17:00</span><span class="m"><strong>P4 Trimurti Earthing Solution</strong>, Kalibhint Road, Choviswadi.</span></li>
+      <li class="drive"><span class="t">17:00–18:00</span><span class="m">→ Pune airport, ≈ 20 km, 40–60 min. Book a flight at 19:30 or later.</span></li>
+    </ul>
+    <div class="dayfoot"><a class="route" data-stops="Ramee Grand Hotel, Apte Road, Deccan, Pune|Abhinav College, Vadgaon Budruk, Pune 411041|Panchawanti Apartment, Kirkatwadi, Pune 411024|Laxmi Narayan Park, Bhalekar Wasti, Karve Nagar, Pune 411052|Jai Ganesh Vision, Akurdi Chowk, Pune 411035|Kalibhint Road, Choviswadi, Alandi, Pune 412105|Pune International Airport">Open Day 5 route</a><span class="note">Cab: Pune 8 h / 80 km + about 10 extra km, airport drop</span></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="maps">
+  <div class="eyebrow">Section 8</div>
+  <h2>Route maps</h2>
+  <p class="note">These are schematic maps: pins are placed at locality level, not street level, and the lines join stops in visiting order rather than following roads. Use the Google Maps links in sections 6 and 7 for the real road routes.</p>
+  <div class="seg" role="group" aria-label="Itinerary shown on maps">
+    <button type="button" id="btn3" aria-pressed="false">Option A · 3 days</button>
+    <button type="button" id="btn5" aria-pressed="true">Option B · 5 days</button>
+  </div>
+  <div class="grid g2">
+    <div class="mapbox"><div class="eyebrow">Mumbai region</div><svg id="mapM" viewBox="0 0 520 470" role="img" aria-label="Schematic map of Mumbai customer stops"></svg></div>
+    <div class="mapbox"><div class="eyebrow">Pune region</div><svg id="mapP" viewBox="0 0 520 470" role="img" aria-label="Schematic map of Pune customer stops"></svg></div>
+  </div>
+  <div class="legend" id="legend"></div>
+</section>
+
+<!-- 9 -->
+<section id="travel">
+  <div class="eyebrow">Section 9</div>
+  <h2>Flights and intercity transport</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Leg</th><th>Best option</th><th>Duration</th><th>Approx. fare</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Delhi → Mumbai</td><td>IndiGo / Air India / Akasa, DEL → BOM, 06:00–07:00 departure</td><td>2h10–2h20 in the air; DEL check-in 60–90 min before</td><td class="num">₹6,000–9,500<br><span class="note">Nov–Dec 2026 listings from ₹8,150</span></td><td>Fly into BOM (T1 or T2), which is 3–5 km from Saki Naka. Do not book Navi Mumbai airport (NMI); it is about 45 km from Andheri.</td></tr>
+      <tr><td>Mumbai → Pune, by cab <span class="pill v-ok">PICK</span></td><td>Keep the Mumbai cab and driver on an outstation one-way booking</td><td>2h45–3h30 from Dombivli; 3–4 h from Andheri</td><td class="num">₹3,800–4,500 one way incl. toll (Innova ≈ ₹4,050)</td><td>Door to door, carries samples, and lets you visit DBA on the way. Expressway toll ≈ ₹320–350.</td></tr>
+      <tr><td>Mumbai → Pune, by train</td><td>Deccan Queen, Intercity, or the Vande Bharat to Solapur via Pune</td><td>≈ 3h–3h30 + transfers at both ends</td><td class="num">₹200–1,200 (chair car / AC)</td><td>Only makes sense if your last Mumbai meeting is in south Mumbai. It does not fit this route, and you would lose DBA and need a second Pune taxi with samples.</td></tr>
+      <tr><td>Pune → Delhi</td><td>IndiGo / Air India nonstop, evening</td><td>≈ 2h–2h15</td><td class="num">₹5,500–10,000; can spike above ₹14,000 on peak dates</td><td>Book 19:30 or later (Option B) or 20:00 or later (Option A). Pune airport traffic is slow in the evening, so arrive 90 minutes early.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Baggage</h3>
+  <ul class="tight">
+    <li>Domestic economy is usually 15 kg checked and 7 kg cabin (one bag). Excess baggage is expensive at the airport, so prepay extra kilos online if you need them.</li>
+    <li>Copper and brass are heavy. A 10–15 cm piece of each strip, flat, rod and wire you sell weighs about 1–1.5 kg in total. Pack them in checked baggage; metal bars in cabin bags draw security checks.</li>
+    <li>For full-length or heavy samples, courier one box to the Mumbai hotel 3–4 days ahead (call the hotel to accept it) and give any extras away in Pune.</li>
+  </ul>
+</section>
+
+<!-- 10 -->
+<section id="budget">
+  <div class="eyebrow">Section 10</div>
+  <h2>Estimated budget</h2>
+  <p>All figures are estimates for one traveller in INR. Hotel figures include 5% GST. Cab rates are advertised vendor rates for sedans (Dzire / Etios class); an Innova costs about 30–40% more.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th class="num">Option A · 3 days</th><th class="num">Option B · 5 days</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Flights DEL → BOM + PNQ → DEL</td><td class="num">12,000 – 19,500</td><td class="num">12,000 – 19,500</td><td>Fare ranges in section 9</td></tr>
+      <tr><td>Hotels</td><td class="num">10,000 – 14,200</td><td class="num">20,500 – 28,900</td><td>A: 1 Mumbai + 1 Pune night. B: 3 + 1. ₹4,500–7,000 a night + 5% GST</td></tr>
+      <tr><td>Mumbai local cab</td><td class="num">3,100 – 4,600</td><td class="num">8,600 – 12,900</td><td>8 h / 80 km sedan ₹2,500–3,800; extra hours ₹150–200</td></tr>
+      <tr><td>Mumbai → Pune transfer day (cab)</td><td class="num">6,000 – 8,500</td><td class="num">5,500 – 8,000</td><td>Local legs + one-way to Pune, toll included</td></tr>
+      <tr><td>Pune local cab + airport drop</td><td class="num">2,500 – 3,500</td><td class="num">3,000 – 4,000</td><td>8 h / 80 km sedan</td></tr>
+      <tr><td>Delhi home ↔ IGI airport</td><td class="num">1,000 – 2,000</td><td class="num">1,000 – 2,000</td><td>Taxi both ways</td></tr>
+      <tr><td>Food (self)</td><td class="num">3,600 – 6,000</td><td class="num">6,000 – 10,000</td><td>₹1,200–2,000 a day</td></tr>
+      <tr><td>Customer hospitality (tea, lunch)</td><td class="num">1,500 – 3,000</td><td class="num">2,500 – 5,000</td><td>Occasional lunch with a key customer</td></tr>
+      <tr><td>Parking, extra tolls (Sea Link etc.)</td><td class="num">800 – 1,500</td><td class="num">1,200 – 2,000</td><td>Paid parking at Lohar Chawl and Kalina</td></tr>
+      <tr><td>Catalogues, sample cutting, courier</td><td class="num">3,000 – 6,000</td><td class="num">3,000 – 6,000</td><td>25 printed catalogues + sample kits</td></tr>
+      <tr><td>Contingency (10%)</td><td class="num">4,350 – 6,900</td><td class="num">6,300 – 9,800</td><td>Fare spikes, extra km, late check-out</td></tr>
+      <tr style="font-weight:700"><td>Total</td><td class="num">≈ 47,850 – 75,700</td><td class="num">≈ 69,600 – 1,08,100</td><td></td></tr>
+      <tr><td class="note">Cost per customer met</td><td class="num note">≈ ₹3,000 – 4,700 (16)</td><td class="num note">≈ ₹3,900 – 6,000 (18)</td><td></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- strategy -->
+<section id="strategy">
+  <div class="eyebrow">Business meeting strategy</div>
+  <h2>How to run the trip</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Booking the appointments</h3>
+      <ul class="tight">
+        <li><strong>T-10 days:</strong> call each company, ask for the proprietor or the person who buys copper and brass, and confirm the address (especially the five marked CHECK and Global Tech).</li>
+        <li>Follow up on WhatsApp with a one-page company profile PDF, your product list and the proposed time slot.</li>
+        <li><strong>T-2 days:</strong> lock flights and hotels once at least 12 of 18 meetings are confirmed.</li>
+        <li><strong>T-1 day:</strong> send a reminder message with your time window. On the day, message 30 minutes before you arrive.</li>
+        <li>Give windows ("between 11:00 and 11:30"), not exact times, especially in Mumbai.</li>
+      </ul>
+      <p class="note">If you want, I can draft the WhatsApp intro and reminder messages in your voice.</p>
+    </div>
+    <div class="card">
+      <h3>How many meetings a day</h3>
+      <ul class="tight">
+        <li><strong>4 driving meetings</strong> is the comfortable maximum in Mumbai; <strong>6</strong> only works when stops are walkable (Lohar Chawl) or in a tight loop (south Pune).</li>
+        <li>Plan 45 minutes per meeting and 75 minutes for factory visits (Veraizen, Lath Murbad).</li>
+        <li>Keep one buffer slot each day for overruns and walk-ins.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Who to prioritise</h3>
+      <p class="note">Ranked by likely metal consumption, based on what their listings say they make.</p>
+      <ul class="tight">
+        <li><strong>Tier 1, copper-bonded rod manufacturers:</strong> Veraizen, Lath Industries, Yash Earthing, Fast Earthing. They plate copper onto steel, so they buy copper anodes or cathode, plus brass for couplers and clamps. Give these the longest slots.</li>
+        <li><strong>Tier 2, electrode and earthing-kit makers:</strong> Safeone, Cabana, DBA, Voltterra, Trimurti, Amit, Akshay, Shreenath. They buy copper plates, strips, flats and wire.</li>
+        <li><strong>Tier 3, traders and dealers:</strong> Maya, Ramesh, Hari Om, Kihi, Aryan. Smaller tickets, but frequent repeat orders, and they know everyone in the market.</li>
+        <li><strong>Unconfirmed:</strong> Global Tech. Visit only after the phone call.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Catalogue and samples</h3>
+      <ul class="tight">
+        <li>A 4–6 page catalogue: grades (ETP copper, EC-grade, brass alloys), forms and sizes, standards (IS / ASTM where applicable), MOQ, lead time, payment terms, delivery to Mumbai and Pune.</li>
+        <li>A price sheet linked to LME / MCX copper, so prices move with the published rate and there are no surprises.</li>
+        <li>Sample kit: 10–15 cm pieces of copper strip, flat, rod and wire, brass rod, and a copper anode offcut, each labelled with grade and size. Bring a mill test certificate copy for each.</li>
+        <li>Carry a soft copy on your phone to share on WhatsApp during the meeting.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>How to pitch as a non-ferrous supplier</h3>
+      <ul class="tight">
+        <li>Open by asking what they buy today: copper grade, monthly tonnage, supplier, credit days, pain points (purity, delivery, price swings).</li>
+        <li>Lead with consistency: guaranteed purity with test certificates matters to rod makers, because poor copper causes bonding and plating failures in CPRI-type tests.</li>
+        <li>Offer a trial order at a small quantity, delivered to their door, to remove the risk of switching.</li>
+        <li>For traders: offer standard sizes ready in stock and fast dispatch from Delhi, or ask whether a Mumbai stock point would change their buying.</li>
+        <li>Close each meeting with one concrete next step: a quote within 48 hours, a sample test, or a trial order.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Customer visit checklist</h3>
+      <ul class="check" id="checklist">
+        <li><label><input type="checkbox" id="c1"> Address and contact person confirmed the day before</label></li>
+        <li><label><input type="checkbox" id="c2"> Catalogue, price sheet and visiting cards in bag</label></li>
+        <li><label><input type="checkbox" id="c3"> Sample kit and test certificates</label></li>
+        <li><label><input type="checkbox" id="c4"> Their products and likely metal needs reviewed</label></li>
+        <li><label><input type="checkbox" id="c5"> Ask: grades, monthly volume, current supplier, credit terms</label></li>
+        <li><label><input type="checkbox" id="c6"> Photo of their unit and product range (with permission)</label></li>
+        <li><label><input type="checkbox" id="c7"> GST number and purchase contact collected</label></li>
+        <li><label><input type="checkbox" id="c8"> Next step agreed, with a date</label></li>
+        <li><label><input type="checkbox" id="c9"> Notes written and thank-you message sent the same day</label></li>
+        <li><label><input type="checkbox" id="c10"> Quote sent within 48 hours</label></li>
+      </ul>
+      <p class="note" style="margin-top:8px">Ticks are saved in this browser only.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="final">
+  <div class="eyebrow">Section 11</div>
+  <h2>Final recommendation</h2>
+  <div class="verdict">
+    <p><strong>Choose Option B, the 5-day plan.</strong> It costs about ₹25,000–30,000 more than Option A and gets you all 18 customers instead of 16. More importantly, each day has slack. In Option A, Day 2 chains four meetings with about 7 hours of driving through Bhiwandi and onto the Expressway, so a single delay in Mumbai pushes DBA late and lands you in Pune at night. First meetings are about building trust, and a rushed 45 minutes after a late arrival works against that.</p>
+    <p>Choose Option A only if you cannot be away for five days. In that case, handle Trimurti and Shreenath by video call and plan to see them on your Hyderabad / South India trip via Pune.</p>
+    <p><strong>Next steps:</strong> (1) call the five CHECK companies and Global Tech this week; (2) fix the dates (Tuesday start works best for both options); (3) book open-jaw flights DEL → BOM and PNQ → DEL; (4) book Kohinoor Continental and Ramee Grand at rates of ₹7,500 or less; (5) book one cab operator for Mumbai plus the Pune transfer.</p>
+  </div>
+</section>
+
+<!-- sources -->
+<section id="sources" style="border-bottom:0">
+  <div class="eyebrow">Sources</div>
+  <h2>Where the information came from</h2>
+  <ul class="src">
+    <li><a href="https://m.indiamart.com/veraizen-earthing/profile.html">Veraizen Earthing, IndiaMART</a> · <a href="https://www.aajjo.com/product/gi-earthing-strip-in-palghar-veraizen-earthing-private-limited">Aajjo</a> · <a href="https://www.tradeindia.com/products/earth-bus-bar-9198693.html">TradeIndia</a></li>
+    <li><a href="https://www.justdial.com/jdmart/Mumbai/Safeone-Earthing-OppAH-Masjid-Saki-Naka-Andheri-Andheri-East/022PXX22-XX22-210629131145-G6I2_BZDET/catalogue">Safeone Earthing, Justdial</a> · <a href="https://www.indiamart.com/safeoneearthing/">IndiaMART</a> · <a href="https://piceapp.com/gst-number-search/safeone-earthing-llp-27aeofs7608q1zz/">GST record</a></li>
+    <li><a href="https://m.indiamart.com/lath-industries">Lath Industries, IndiaMART (Murbad)</a> · <a href="https://www.justdial.com/Mumbai/Lath-Industries-Near-Dodia-ELectricals-Pathak-Wadi-Lohar-Chawl/022PXX22-XX22-230409234006-V5K3_BZDET">Justdial (Lohar Chawl)</a></li>
+    <li><a href="https://m.indiamart.com/maya-earthing-industries">Maya Earthing Industries, IndiaMART</a></li>
+    <li><a href="https://m.indiamart.com/aryanenterprisesmaharashtra">Aryan Enterprise, IndiaMART</a></li>
+    <li><a href="https://dbaearthingwale.com/earthing-contractor-in-dombivli-midc/">DBA Earthing website</a> · <a href="https://www.aajjo.com/store/dba-earthing">Aajjo</a></li>
+    <li><a href="https://kihienterprises.in/">Kihi Enterprises website</a> · <a href="https://www.justdial.com/jdmart/Mumbai/Kihi-Enterprises-Borivali-West/022PXX22-XX22-201212125552-B8Q7_BZDET/catalogue">Justdial</a> · <a href="https://www.indiamart.com/kihi-enterprises/">IndiaMART</a></li>
+    <li><a href="https://www.justdial.com/jdmart/Mumbai/Cabana-Solutions-Near-Bharat-Co-Operative-Bank-and-Mumbai-University-Vidyanagri-Santacruz-East/022PXX22-XX22-160609143258-E9A5_BZDET/catalogue">Cabana Solutions, Justdial</a> · <a href="https://www.indiamart.com/cabana-solutions/">IndiaMART</a></li>
+    <li><a href="https://www.justdial.com/jdmart/Mumbai/Ramesh-Earthing-Corporation-Kalbadevi/022PXX22-XX22-190115182744-L4E3_BZDET/catalogue/products-Copper-Rod?pid=&amp;nid=&amp;jdmid=&amp;showSearch=0">Ramesh Earthing, Justdial</a> · <a href="https://www.knowyourgst.com/gst-number-search/ramesh-earthing-corporation-27BBXPB4491D1ZF/">GST record</a></li>
+    <li><a href="https://www.tradeindia.com/hari-om-earthing-india-6498767/">Hari Om Earthing (India), TradeIndia</a></li>
+    <li><a href="https://www.justdial.com/Pune/Voltterra-Industries-Pvt-Ltd-Near-Pragati-Hotel-Jambhulwadi/020PXX20-XX20-250714140120-G4H8_BZDET">Voltterra Industries, Justdial</a> · <a href="https://dir.indiamart.com/pune/earthing-rod.html">IndiaMART Pune directory</a></li>
+    <li><a href="https://m.indiamart.com/yashearthingsolutions">Yash Earthing Solutions, IndiaMART</a> · <a href="https://themachinemaker.com/people/jaikumar-belsare-yash-earthing-2211/">Machine Maker interview</a></li>
+    <li><a href="https://fastearthing.in/contact-us.html">Fast Earthing website</a> · <a href="https://www.indiamart.com/fast-earthing-enterprises/">IndiaMART</a> · <a href="https://www.thecompanycheck.com/org/fast-earthing-enterprises/86a5cdb5fa">Company Check</a></li>
+    <li><a href="https://m.indiamart.com/trimurtiearthingsolution/profile.html">Trimurti Earthing Solution, IndiaMART</a></li>
+    <li><a href="https://www.tradeindia.com/products/gi-earthing-electrode-c8882186.html">Shreenath Enterprises, TradeIndia</a> · <a href="https://m.indiamart.com/shree-nathenterprises">IndiaMART</a></li>
+    <li><a href="https://www.sulekha.com/global-tech-i-pvt-ltd-sadashiv-peth-pune-contact-address">Global Tech (India), Sulekha</a> · <a href="https://safetyzone.co.in/listing/global-tech-india-private-limited-sadashiv-peth-pune/">Safetyzone</a> · <a href="https://m.indiamart.com/global-tech-india/profile.html">IndiaMART</a></li>
+    <li><a href="https://m.indiamart.com/amit-earthingsolution/profile.html">Amit Earthing Solution, IndiaMART</a></li>
+    <li><a href="https://akshayearthing.com/">Akshay Earthing website</a> · <a href="https://www.exportersindia.com/akshay-earthing-enterprises/">ExportersIndia</a> · <a href="https://www.justdial.com/Pune/Earthing-Material-Manufacturers-in-Pimpri/nct-10178904">Justdial</a></li>
+    <li><a href="https://www.kayak.co.in/Mumbai-Hotels-Kohinoor-Continental.97334.ksp">Kohinoor Continental, Kayak</a> · <a href="https://www.momondo.in/hotels/mumbai/Kohinoor-Continental.mhd97334.ksp">Momondo</a></li>
+    <li><a href="https://www.expedia.co.id/en/Mumbai-Hotels-Lemon-Tree-Premier-Mumbai-Intl-Airport.h37019497.Hotel-Reviews">Lemon Tree Premier Mumbai Airport, Expedia</a> · <a href="https://www.kayak.co.in/Mumbai-Hotels-ibis-Mumbai-Airport.372008.ksp">ibis Mumbai Airport, Kayak</a></li>
+    <li><a href="https://www.orbitz.com/Shivajinagar-Pune-Hotels.0-n3000664082-0.Travel-Guide-Filter-Hotels">Pune Shivajinagar hotels, Orbitz</a> · <a href="https://www.cleartrip.com/hotels/details/the-pride-hotel-pune-40019">The Pride Hotel, Cleartrip</a> · <a href="https://www.travelocity.com/Swargate-Pune-Hotels.0-n553248635974587397-0.Travel-Guide-Filter-Hotels">Swargate hotels, Travelocity</a></li>
+    <li><a href="https://www.happyfares.in/flights/delhi-to-mumbai-cheap-airtickets">Delhi–Mumbai fares, HappyFares</a> · <a href="https://www.ixigo.com/Pune-Delhi-flights">Pune–Delhi flights, ixigo</a></li>
+    <li><a href="https://www.punekarnews.in/pune-mumbai-cab-fares-up-by-rs-300-400-as-fuel-costs-rise/">Pune–Mumbai cab fares, Punekar News (Jun 2026)</a> · <a href="https://cabbazar.com/route/mumbai-to-pune.html">Cabbazar</a> · <a href="https://www.trivenicabs.in/full-day-cab-rental">8 h / 80 km rates, Triveni Cabs</a></li>
+  </ul>
+</section>
+</div>
+
+<script>
+(function(){
+  // Google Maps links
+  var G="https://www.google.com/maps/";
+  document.querySelectorAll("a[data-q]").forEach(function(a){
+    a.href=G+"search/?api=1&query="+encodeURIComponent(a.getAttribute("data-q"));
+    a.target="_blank"; a.rel="noopener";
+  });
+  document.querySelectorAll("a.route").forEach(function(a){
+    var s=a.getAttribute("data-stops").split("|");
+    var url=G+"dir/?api=1&travelmode=driving&origin="+encodeURIComponent(s[0])+"&destination="+encodeURIComponent(s[s.length-1]);
+    if(s.length>2) url+="&waypoints="+encodeURIComponent(s.slice(1,-1).join("|"));
+    a.href=url; a.target="_blank"; a.rel="noopener";
+  });
+
+  // Checklist (per-browser convenience)
+  document.querySelectorAll("#checklist input").forEach(function(cb){
+    try{ cb.checked = localStorage.getItem("mm-"+cb.id)==="1"; }catch(e){}
+    cb.addEventListener("change",function(){ try{ localStorage.setItem("mm-"+cb.id, cb.checked?"1":"0"); }catch(e){} });
+  });
+
+  // Schematic maps. Coordinates are approximate locality centres.
+  var M = {
+    bom:{n:"BOM airport",lat:19.0989,lng:72.8746,k:"poi"},
+    hm:{n:"Hotel (Andheri E)",lat:19.1103,lng:72.8640,k:"hotel"},
+    m2:{n:"Safeone",lat:19.1060,lng:72.8890},
+    m8:{n:"Cabana",lat:19.0750,lng:72.8620},
+    lc:{n:"Lohar Chawl ×4",lat:18.9475,lng:72.8320},
+    m7:{n:"Kihi",lat:19.2310,lng:72.8470},
+    m5:{n:"Aryan",lat:19.2290,lng:72.8680},
+    m1:{n:"Veraizen",lat:19.4150,lng:72.8720},
+    m6:{n:"DBA",lat:19.1660,lng:73.0820},
+    m3f:{n:"Lath factory (opt.)",lat:19.2650,lng:73.3800,k:"opt"},
+    pune:{n:"→ Pune",lat:19.0300,lng:73.1500,k:"poi"}
+  };
+  var P = {
+    hp:{n:"Hotel (Deccan)",lat:18.5180,lng:73.8440,k:"hotel"},
+    p6:{n:"Global Tech (?)",lat:18.5085,lng:73.8500},
+    p2:{n:"Yash",lat:18.4650,lng:73.8560},
+    p3:{n:"Fast",lat:18.4520,lng:73.8630},
+    p8a:{n:"Akshay alt. (Ambegaon)",lat:18.4480,lng:73.8420,k:"opt"},
+    p1:{n:"Voltterra",lat:18.4650,lng:73.8230},
+    p7:{n:"Amit",lat:18.4420,lng:73.7860},
+    p8:{n:"Akshay (Karve Nagar)",lat:18.4900,lng:73.8170},
+    p5:{n:"Shreenath",lat:18.6480,lng:73.7700},
+    p4:{n:"Trimurti",lat:18.6770,lng:73.8970},
+    pnq:{n:"PNQ airport",lat:18.5820,lng:73.9200,k:"poi"},
+    mum:{n:"from Mumbai",lat:18.6300,lng:73.7650,k:"poi"}
+  };
+  var ROUTES = {
+    "3":[
+      {d:1,c:"--d1",l:"Day 1",m:["bom","hm","m2","m8","lc","hm"]},
+      {d:2,c:"--d2",l:"Day 2",m:["hm","m7","m5","m1","m6","pune"],p:["mum","hp"]},
+      {d:3,c:"--d3",l:"Day 3",p:["hp","p6","p2","p3","p1","p7","p8","pnq"]}
+    ],
+    "5":[
+      {d:1,c:"--d1",l:"Day 1",m:["bom","hm","m2","m8","hm"]},
+      {d:2,c:"--d2",l:"Day 2",m:["hm","lc","hm"]},
+      {d:3,c:"--d3",l:"Day 3",m:["hm","m7","m5","m1","hm"]},
+      {d:4,c:"--d4",l:"Day 4",m:["hm","m6","pune"],p:["mum","hp","p6","p2","p3","hp"]},
+      {d:5,c:"--d5",l:"Day 5",p:["hp","p1","p7","p8","p5","p4","pnq"]}
+    ]
+  };
+  var NS="http://www.w3.org/2000/svg";
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  function proj(pts){
+    var la=[],ln=[];for(var k in pts){la.push(pts[k].lat);ln.push(pts[k].lng);}
+    var minLa=Math.min.apply(0,la),maxLa=Math.max.apply(0,la),minLn=Math.min.apply(0,ln),maxLn=Math.max.apply(0,ln);
+    var W=520,H=470,pad=46;
+    var kx=Math.cos(((minLa+maxLa)/2)*Math.PI/180);
+    var sx=(W-2*pad)/((maxLn-minLn)*kx), sy=(H-2*pad)/(maxLa-minLa), s=Math.min(sx,sy);
+    var ox=(W-(maxLn-minLn)*kx*s)/2, oy=(H-(maxLa-minLa)*s)/2;
+    return function(p){return [ox+(p.lng-minLn)*kx*s, H-oy-(p.lat-minLa)*s];};
+  }
+  function draw(svg,pts,key,plan){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var f=proj(pts), css=getComputedStyle(document.documentElement);
+    var col=function(v){return css.getPropertyValue(v).trim();};
+    svg.appendChild(el("rect",{x:0,y:0,width:520,height:470,fill:col("--bg"),rx:6}));
+    ROUTES[plan].forEach(function(r){
+      var seq=r[key]; if(!seq) return;
+      var d=seq.map(function(id,i){var q=f(pts[id]);return (i?"L":"M")+q[0].toFixed(1)+" "+q[1].toFixed(1);}).join(" ");
+      svg.appendChild(el("path",{d:d,fill:"none",stroke:col(r.c),"stroke-width":3,"stroke-linejoin":"round","stroke-linecap":"round",opacity:.85,"stroke-dasharray":r.d%2?"":"7 5"}));
+    });
+    for(var id in pts){
+      var p=pts[id], q=f(p), kind=p.k||"cust";
+      var fill = kind==="hotel"?col("--verd"):kind==="poi"?col("--muted"):kind==="opt"?col("--surface"):col("--copper");
+      var stroke = kind==="opt"?col("--copper"):col("--surface");
+      if(kind==="hotel") svg.appendChild(el("rect",{x:q[0]-6,y:q[1]-6,width:12,height:12,fill:fill,stroke:stroke,"stroke-width":2,rx:2}));
+      else svg.appendChild(el("circle",{cx:q[0],cy:q[1],r:kind==="poi"?4.5:6,fill:fill,stroke:stroke,"stroke-width":2}));
+      var right=q[0]<400, t=el("text",{x:q[0]+(right?10:-10),y:q[1]+4,"text-anchor":right?"start":"end","font-size":12,"font-family":"Inter, system-ui, sans-serif",fill:col("--fg")});
+      t.textContent=p.n; svg.appendChild(t);
+    }
+  }
+  function legend(plan){
+    var L=document.getElementById("legend"); L.innerHTML="";
+    var css=getComputedStyle(document.documentElement);
+    ROUTES[plan].forEach(function(r){var s=document.createElement("span");s.innerHTML='<span class="swatch" style="background:var('+r.c+')"></span>'+r.l;L.appendChild(s);});
+    var x=document.createElement("span"); x.textContent="■ hotel · ● customer · ○ optional / alternate"; L.appendChild(x);
+  }
+  var cur="5";
+  function render(){
+    draw(document.getElementById("mapM"),M,"m",cur);
+    draw(document.getElementById("mapP"),P,"p",cur);
+    legend(cur);
+    document.getElementById("btn3").setAttribute("aria-pressed",cur==="3");
+    document.getElementById("btn5").setAttribute("aria-pressed",cur==="5");
+  }
+  document.getElementById("btn3").addEventListener("click",function(){cur="3";render();});
+  document.getElementById("btn5").addEventListener("click",function(){cur="5";render();});
+  render();
+  try{ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",render); }catch(e){}
+  new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+})();
+</script>
